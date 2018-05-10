@@ -5,8 +5,8 @@ public class CurrentTimeOutput {
 
    public static void main(String args[]) {
       Date dateNow = new Date();
-      SimpleDateFormat formatForDateNow = new SimpleDateFormat("E yyyy.MM.dd 'и время' hh:mm:ss a zzz");
+      SimpleDateFormat formatForDateNow = new SimpleDateFormat("E yyyy.MM.dd 'and time' hh:mm:ss a zzz");
 
-      System.out.println("Текущая дата " + formatForDateNow.format(dateNow));
+      System.out.println("Current date " + formatForDateNow.format(dateNow));
    }
 }
