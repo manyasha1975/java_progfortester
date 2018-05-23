@@ -1,3 +1,5 @@
+package ru.mytest.currdate;
+
 import java.util.*;
 import java.text.*;
 
