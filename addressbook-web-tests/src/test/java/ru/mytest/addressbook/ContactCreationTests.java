@@ -36,7 +36,7 @@ public class ContactCreationTests {
   @Test
   public void testContactCreationTests() throws Exception {
     gotoNewContact();
-    fillContactForm("Fedor", "Petrov", "Fedora", "Tester", "Test company", "Ekaterinburg", "+79192347658", "fedor@gmail.com");
+    fillContactForm(new ContactData("Fedor", "Petrov", "Fedora", "Tester", "Test company", "Ekaterinburg", "+79192347658", "fedor@gmail.com"));
     submitContactCreation();
     gotoHomePage();
   }
@@ -49,32 +49,32 @@ public class ContactCreationTests {
     driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]")).click();
   }
 
-  private void fillContactForm(String contactFirstName, String contactLastName, String contactNickName, String contactTitle, String contactCompany, String contactAddress, String contactMobile, String contactEmail) {
+  private void fillContactForm(ContactData contactData) {
     driver.findElement(By.name("firstname")).click();
     driver.findElement(By.name("firstname")).clear();
-    driver.findElement(By.name("firstname")).sendKeys(contactFirstName);
+    driver.findElement(By.name("firstname")).sendKeys(contactData.getContactFirstName());
     driver.findElement(By.name("lastname")).click();
     driver.findElement(By.name("lastname")).clear();
-    driver.findElement(By.name("lastname")).sendKeys(contactLastName);
+    driver.findElement(By.name("lastname")).sendKeys(contactData.getContactLastName());
     driver.findElement(By.name("nickname")).click();
     driver.findElement(By.name("nickname")).clear();
-    driver.findElement(By.name("nickname")).sendKeys(contactNickName);
+    driver.findElement(By.name("nickname")).sendKeys(contactData.getContactNickName());
     driver.findElement(By.name("title")).click();
     driver.findElement(By.name("title")).click();
     driver.findElement(By.name("title")).clear();
-    driver.findElement(By.name("title")).sendKeys(contactTitle);
+    driver.findElement(By.name("title")).sendKeys(contactData.getContactTitle());
     driver.findElement(By.name("company")).click();
     driver.findElement(By.name("company")).clear();
-    driver.findElement(By.name("company")).sendKeys(contactCompany);
+    driver.findElement(By.name("company")).sendKeys(contactData.getContactCompany());
     driver.findElement(By.name("address")).click();
     driver.findElement(By.name("address")).clear();
-    driver.findElement(By.name("address")).sendKeys(contactAddress);
+    driver.findElement(By.name("address")).sendKeys(contactData.getContactAddress());
     driver.findElement(By.name("mobile")).click();
     driver.findElement(By.name("mobile")).clear();
-    driver.findElement(By.name("mobile")).sendKeys(contactMobile);
+    driver.findElement(By.name("mobile")).sendKeys(contactData.getContactMobile());
     driver.findElement(By.name("email")).click();
     driver.findElement(By.name("email")).clear();
-    driver.findElement(By.name("email")).sendKeys(contactEmail);
+    driver.findElement(By.name("email")).sendKeys(contactData.getContactEmail());
   }
 
   private void gotoNewContact() {
