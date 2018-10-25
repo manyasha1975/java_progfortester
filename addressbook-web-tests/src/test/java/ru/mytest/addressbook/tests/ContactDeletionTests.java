@@ -8,13 +8,12 @@ public class ContactDeletionTests extends TestBase {
 
   @Test
   public void testContactDeletion() throws Exception {
-    app.gotoHomePage();
-    /*selectContact();*/
-    app.selectGroup();
+    app.getNavigationHelper().gotoHomePage();
+    app.getContactHelper().selectContact();
     app.acceptNextAlert = true;
-    app.deleteSelectedContacts();
+    app.getContactHelper().deleteSelectedContacts();
     assertTrue(app.closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
-    app.gotoHomePage();
+    app.getNavigationHelper().gotoHomePage();
   }
 
  }
