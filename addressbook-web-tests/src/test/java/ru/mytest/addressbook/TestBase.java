@@ -1,6 +1,7 @@
 package ru.mytest.addressbook;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -12,7 +13,7 @@ import static org.testng.Assert.fail;
 public class TestBase {
   private WebDriver driver;
   private String baseUrl;
-  private boolean acceptNextAlert = true;
+  protected boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
 
   @BeforeClass(alwaysRun = true)
@@ -40,7 +41,7 @@ public class TestBase {
   }
 
   protected void submitGroupCreation() {
-    driver.findElement(By.name("submit")).click();
+    driver.findElement(By.xpath("//input[@value='Enter information']")).click();
   }
 
   protected void fillGroupForm(GroupData groupData) {
@@ -94,7 +95,7 @@ public class TestBase {
     }
   }
 
-  private String closeAlertAndGetItsText() {
+  public String closeAlertAndGetItsText() {
     try {
       Alert alert = driver.switchTo().alert();
       String alertText = alert.getText();
@@ -122,7 +123,7 @@ public class TestBase {
   }
 
   protected void submitContactCreation() {
-    driver.findElement(By.name("submit")).click();
+    driver.findElement(By.xpath("//input[@value='Enter']")).click();
   }
 
   protected void fillContactForm(ContactData contactData) {
@@ -155,5 +156,13 @@ public class TestBase {
 
   protected void gotoNewContact() {
     driver.findElement(By.linkText("add new")).click();
+  }
+
+  protected void selectContact() {
+    driver.findElement(By.id("12")).click();
+  }
+
+  protected void deleteSelectedContacts() {
+    driver.findElement(By.xpath("//input[@value='Delete']")).click();
   }
 }

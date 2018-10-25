@@ -8,7 +8,7 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreation() throws Exception {
     gotoNewContact();
     fillContactForm(new ContactData("Fedor", "Petrov", "Fedora", "Tester", "Test company", "Ekaterinburg", "+79192347658", "fedor@gmail.com"));
-    submitAction();
+    submitContactCreation();
     gotoHomePage();
   }
 
