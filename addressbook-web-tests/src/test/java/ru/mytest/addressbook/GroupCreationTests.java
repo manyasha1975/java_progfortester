@@ -2,6 +2,7 @@ package ru.mytest.addressbook;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 import static org.testng.Assert.*;
 import org.openqa.selenium.*;
@@ -30,7 +31,7 @@ public class GroupCreationTests {
     driver.findElement(By.name("pass")).click();
     driver.findElement(By.name("pass")).clear();
     driver.findElement(By.name("pass")).sendKeys(password);
-    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Password:'])[1]/following::input[2]")).click();
+    driver.findElement(By.id("LoginForm")).submit();
   }
 
   @Test
