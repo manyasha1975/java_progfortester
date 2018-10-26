@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 public class HelperBase {
 
   protected WebDriver driver;
+  private boolean acceptNextAlert = true;
 
   public HelperBase(WebDriver driver) {
     this.driver = driver;
@@ -42,18 +43,18 @@ public class HelperBase {
     }
   }
 
-  public String closeAlertAndGetItsText(ApplicationManager applicationManager) {
+  public String closeAlertAndGetItsText() {
     try {
-      Alert alert = applicationManager.driver.switchTo().alert();
-      String alertText = alert.getText();
-      if (applicationManager.acceptNextAlert) {
-        alert.accept();
-      } else {
-        alert.dismiss();
+        Alert alert = driver.switchTo().alert();
+        String alertText = alert.getText();
+        if (acceptNextAlert) {
+          alert.accept();
+        } else {
+          alert.dismiss();
+        }
+        return alertText;
+      } finally {
+        acceptNextAlert = true;
       }
-      return alertText;
-    } finally {
-      applicationManager.acceptNextAlert = true;
-    }
   }
 }

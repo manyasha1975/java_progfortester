@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.mytest.addressbook.model.ContactData;
 
+import static org.testng.Assert.assertTrue;
+
 public class ContactHelper extends HelperBase {
 
   public ContactHelper(WebDriver driver) {
@@ -43,5 +45,9 @@ public class ContactHelper extends HelperBase {
 
   public void submitContactModification() {
     click(By.name("update"));
+  }
+
+  public void closeDialogWindow() {
+    assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
   }
 }

@@ -2,8 +2,6 @@ package ru.mytest.addressbook.tests;
 
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
-
 public class ContactDeletionTests extends TestBase {
 
   @Test
@@ -12,8 +10,8 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().selectContact();
     app.acceptNextAlert = true;
     app.getContactHelper().deleteSelectedContacts();
-    assertTrue(app.navigationHelper.closeAlertAndGetItsText(app).matches("^Delete 1 addresses[\\s\\S]$"));
+    app.getContactHelper().closeDialogWindow();
     app.getNavigationHelper().gotoHomePage();
   }
 
- }
+}
