@@ -10,7 +10,7 @@ import static org.testng.Assert.fail;
 public class ApplicationManager {
   public WebDriver driver;
   private ContactHelper contactHelper;
-  private NavigationHelper navigationHelper;
+  public NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
   private SessionHelper sessionHelper;
   public boolean acceptNextAlert = true;
@@ -35,21 +35,6 @@ public class ApplicationManager {
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {
       fail(verificationErrorString);
-    }
-  }
-
-  public String closeAlertAndGetItsText() {
-    try {
-      Alert alert = driver.switchTo().alert();
-      String alertText = alert.getText();
-      if (acceptNextAlert) {
-        alert.accept();
-      } else {
-        alert.dismiss();
-      }
-      return alertText;
-    } finally {
-      acceptNextAlert = true;
     }
   }
 
