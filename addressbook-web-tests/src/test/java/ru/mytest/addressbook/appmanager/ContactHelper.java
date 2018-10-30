@@ -58,4 +58,15 @@ public class ContactHelper extends HelperBase {
   public void closeDialogWindow() {
     assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
   }
+
+  public void createContact(ContactData contactData, boolean creation) {
+    gotoNewContact();
+    fillContactForm(contactData, creation);
+    submitContactCreation();
+    app.getNavigationHelper().gotoHomePage();
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected[]"));
+  }
 }
