@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 
 public class NavigationHelper extends HelperBase {
 
-  public NavigationHelper(WebDriver driver) {
-    super(driver);
+  public NavigationHelper(ApplicationManager app) {
+    super(app);
   }
 
   public void gotoGroupPage() {

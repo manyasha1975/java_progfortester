@@ -1,7 +1,6 @@
 package ru.mytest.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.mytest.addressbook.model.ContactData;
@@ -10,14 +9,8 @@ import static org.testng.Assert.assertTrue;
 
 public class ContactHelper extends HelperBase {
 
-  /*public ContactHelper(WebDriver driver) {
-    super(driver);
-  }*/
-  protected ApplicationManager app;
-
   public ContactHelper(ApplicationManager app) {
-    super(app.driver);
-    this.app = app;
+    super(app);
   }
 
   public void submitContactCreation() {

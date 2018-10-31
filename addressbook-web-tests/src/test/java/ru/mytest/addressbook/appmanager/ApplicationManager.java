@@ -12,10 +12,10 @@ import static org.testng.Assert.fail;
 
 public class ApplicationManager {
   public WebDriver driver;
-  private ContactHelper contactHelper;
+  public ContactHelper contactHelper;
   public NavigationHelper navigationHelper;
-  private GroupHelper groupHelper;
-  private SessionHelper sessionHelper;
+  public GroupHelper groupHelper;
+  public SessionHelper sessionHelper;
   public boolean acceptNextAlert = true;
   public String baseUrl;
   public StringBuffer verificationErrors = new StringBuffer();
@@ -36,11 +36,10 @@ public class ApplicationManager {
     baseUrl = "https://www.katalon.com/";
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     driver.get("http://localhost/addressbook/");
-    groupHelper = new GroupHelper(driver);
-    navigationHelper = new NavigationHelper(driver);
-    /*contactHelper = new ContactHelper(driver);*/
+    groupHelper = new GroupHelper(this);
+    navigationHelper = new NavigationHelper(this);
     contactHelper = new ContactHelper(this);
-    sessionHelper = new SessionHelper(driver);
+    sessionHelper = new SessionHelper(this);
     sessionHelper.login("admin", "secret");
   }
 

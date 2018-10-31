@@ -6,8 +6,8 @@ import ru.mytest.addressbook.model.GroupData;
 
 public class GroupHelper extends HelperBase {
 
-  public GroupHelper(WebDriver driver) {
-    super(driver);
+  public GroupHelper(ApplicationManager app) {
+    super(app);
   }
 
   public void submitGroupCreation() {

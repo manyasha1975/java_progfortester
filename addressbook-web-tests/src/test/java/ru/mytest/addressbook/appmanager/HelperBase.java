@@ -1,14 +1,17 @@
 package ru.mytest.addressbook.appmanager;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver;
 
 public class HelperBase {
 
   protected WebDriver driver;
   private boolean acceptNextAlert = true;
+  protected ApplicationManager app;
 
-  public HelperBase(WebDriver driver) {
-    this.driver = driver;
+  public HelperBase(ApplicationManager app) {
+    this.app = app;
+    this.driver = app.driver;
   }
 
   protected void type(By locator, String text) {
