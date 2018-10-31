@@ -38,7 +38,8 @@ public class ApplicationManager {
     driver.get("http://localhost/addressbook/");
     groupHelper = new GroupHelper(driver);
     navigationHelper = new NavigationHelper(driver);
-    contactHelper = new ContactHelper(driver);
+    /*contactHelper = new ContactHelper(driver);*/
+    contactHelper = new ContactHelper(this);
     sessionHelper = new SessionHelper(driver);
     sessionHelper.login("admin", "secret");
   }
