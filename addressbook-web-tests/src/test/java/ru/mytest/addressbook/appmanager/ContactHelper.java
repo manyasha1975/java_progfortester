@@ -1,6 +1,7 @@
 package ru.mytest.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.mytest.addressbook.model.ContactData;
@@ -27,7 +28,11 @@ public class ContactHelper extends HelperBase {
     type(By.name("mobile"), contactData.getContactMobile());
     type(By.name("email"), contactData.getContactEmail());
     if (creation) {
-      new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      if (isThereAGroupInList(contactData)) {
+        new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      } else {
+        new Select(driver.findElement(By.name("new_group"))).selectByVisibleText("[none]");
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -67,4 +72,14 @@ public class ContactHelper extends HelperBase {
   public boolean isThereAContact() {
     return isElementPresent(By.name("selected[]"));
   }
+
+  public boolean isThereAGroupInList(ContactData contactData) {
+    try {
+      new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      return true;
+    } catch (NoSuchElementException e) {
+      return false;
+    }
+  }
+
 }
