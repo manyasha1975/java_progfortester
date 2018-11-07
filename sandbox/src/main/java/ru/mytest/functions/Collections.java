@@ -10,7 +10,7 @@ public class Collections {
     String[] langs = {"Java", "C#", "Python", "PHP"};
 
     List<String> languages = Arrays.asList("Java", "C#", "Python", "PHP");
-    
+
     for (int i = 0; i < langs.length; i++) {
       System.out.println("Я хочу выучить " + langs[i]);
     }
