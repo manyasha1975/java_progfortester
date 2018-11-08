@@ -5,6 +5,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.mytest.addressbook.model.ContactData;
+import ru.mytest.addressbook.model.GroupData;
 
 import static org.testng.Assert.assertTrue;
 
@@ -32,6 +33,8 @@ public class ContactHelper extends HelperBase {
         new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
       } else {
         new Select(driver.findElement(By.name("new_group"))).selectByVisibleText("[none]");
+        /*app.getGroupHelper().createGroup(new GroupData(contactData.getGroup(), null, null));
+        createContact(contactData, creation);*/
       }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
@@ -82,4 +85,7 @@ public class ContactHelper extends HelperBase {
     }
   }
 
+  public int getContactCount() {
+    return driver.findElements(By.xpath("//table[@id='maintable']//input[@name='selected[]']")).size();
+  }
 }
