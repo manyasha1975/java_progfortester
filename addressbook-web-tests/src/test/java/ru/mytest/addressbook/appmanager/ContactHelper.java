@@ -2,10 +2,14 @@ package ru.mytest.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.mytest.addressbook.model.ContactData;
 import ru.mytest.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.testng.Assert.assertTrue;
 
@@ -88,4 +92,21 @@ public class ContactHelper extends HelperBase {
   public int getContactCount() {
     return driver.findElements(By.xpath("//table[@id='maintable']//input[@name='selected[]']")).size();
   }
-}
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<ContactData>();
+    List<WebElement> elements = driver.findElements(By.cssSelector("tr[name='entry']"));
+    for (WebElement element : elements) {
+      List<WebElement> columns = element.findElements(By.cssSelector("td"));
+      String lastName = columns.get(1).getText();
+      String firstName = columns.get(2).getText();
+      String address = columns.get(3).getText();
+      ContactData contact = new ContactData(firstName, lastName, null, null, null, address, null, null, null);
+      contacts.add(contact);
+      System.out.println(firstName);
+      System.out.println(lastName);
+      System.out.println(address);
+      }
+      return contacts;
+    }
+  }
