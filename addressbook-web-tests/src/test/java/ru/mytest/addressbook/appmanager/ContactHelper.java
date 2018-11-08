@@ -45,16 +45,16 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void selectContact() {
-    click(By.name("selected[]"));
+  public void selectContact(int index) {
+    driver.findElements(By.xpath("//table[@id='maintable']//input[@name='selected[]']")).get(index).click();
   }
 
   public void deleteSelectedContacts() {
     click(By.xpath("//input[@value='Delete']"));
   }
 
-  public void initContactModification() {
-    click(By.xpath("//img[@title='Edit']"));
+  public void initContactModification(int index) {
+    driver.findElements(By.xpath("//img[@title='Edit']")).get(index).click();
   }
 
   public void submitContactModification() {
