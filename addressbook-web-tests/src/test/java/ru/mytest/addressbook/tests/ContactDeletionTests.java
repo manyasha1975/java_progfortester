@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.mytest.addressbook.model.ContactData;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactDeletionTests extends TestBase {
@@ -23,6 +24,12 @@ public class ContactDeletionTests extends TestBase {
     app.getNavigationHelper().gotoHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size() - 1);
+
+    before.remove(before.size() - 1);
+    Comparator<? super ContactData> ById = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
+    before.sort(ById);
+    after.sort(ById);
+    Assert.assertEquals(before, after);
   }
 
 }
