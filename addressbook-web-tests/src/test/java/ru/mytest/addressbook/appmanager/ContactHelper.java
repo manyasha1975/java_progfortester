@@ -67,6 +67,7 @@ public class ContactHelper extends HelperBase {
 
   public void closeDialogWindow() {
     assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
+    driver.findElement(By.cssSelector("div.msgbox"));
   }
 
   public void createContact(ContactData contactData, boolean creation) {
