@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.mytest.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class GroupDeletionTests extends TestBase {
@@ -23,6 +24,9 @@ public class GroupDeletionTests extends TestBase {
     Assert.assertEquals(after.size(), before.size() - 1);
 
     before.remove(before.size() - 1);
+    Comparator<? super GroupData> ByGrid = (g1, g2) -> Integer.compare(g1.getGrid(), g2.getGrid());
+    before.sort(ByGrid);
+    after.sort(ByGrid);
     Assert.assertEquals(before, after);
   }
 

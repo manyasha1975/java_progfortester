@@ -9,7 +9,7 @@ public class GroupData {
     private final String grfooter;
 
     public GroupData(String grname, String grheader, String grfooter) {
-        this.grid = 0;
+        this.grid = Integer.MAX_VALUE;
         this.grname = grname;
         this.grheader = grheader;
         this.grfooter = grfooter;
@@ -55,13 +55,12 @@ public class GroupData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupData groupData = (GroupData) o;
-        return grid == groupData.grid &&
-                Objects.equals(grname, groupData.grname);
+        return Objects.equals(grname, groupData.grname);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(grid, grname);
+        return Objects.hash(grname);
     }
 }
