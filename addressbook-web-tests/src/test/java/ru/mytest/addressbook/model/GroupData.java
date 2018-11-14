@@ -3,24 +3,10 @@ package ru.mytest.addressbook.model;
 import java.util.Objects;
 
 public class GroupData {
-    private int grid;
-    private final String grname;
-    private final String grheader;
-    private final String grfooter;
-
-    public GroupData(String grname, String grheader, String grfooter) {
-        this.grid = Integer.MAX_VALUE;
-        this.grname = grname;
-        this.grheader = grheader;
-        this.grfooter = grfooter;
-    }
-
-    public GroupData(int grid, String grname, String grheader, String grfooter) {
-        this.grid = grid;
-        this.grname = grname;
-        this.grheader = grheader;
-        this.grfooter = grfooter;
-    }
+    private int grid = Integer.MAX_VALUE;
+    private String grname;
+    private String grheader;
+    private String grfooter;
 
     public int getGrid() {
         return grid;
@@ -38,8 +24,24 @@ public class GroupData {
         return grfooter;
     }
 
-    public void setGrid(int grid) {
+    public GroupData withId(int grid) {
         this.grid = grid;
+        return this;
+    }
+
+    public GroupData withName(String grname) {
+        this.grname = grname;
+        return this;
+    }
+
+    public GroupData withHeader(String grheader) {
+        this.grheader = grheader;
+        return this;
+    }
+
+    public GroupData withFooter(String grfooter) {
+        this.grfooter = grfooter;
+        return this;
     }
 
     @Override
@@ -63,4 +65,5 @@ public class GroupData {
 
         return Objects.hash(grname);
     }
+
 }
