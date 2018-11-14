@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.mytest.addressbook.model.ContactData;
-import ru.mytest.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +36,8 @@ public class ContactHelper extends HelperBase {
         new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
       } else {
         new Select(driver.findElement(By.name("new_group"))).selectByVisibleText("[none]");
-        /*app.getGroupHelper().createGroup(new GroupData(contactData.getGroup(), null, null));
-        createContact(contactData, creation);*/
+        /*app.group().create(new GroupData(contactData.getGroup(), null, null));
+        create(contactData, creation);*/
       }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
@@ -57,6 +56,21 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("//input[@value='Delete']"));
   }
 
+  public void modify(int index, ContactData contact) {
+    initContactModification(index);
+    fillContactForm(contact, false);
+    submitContactModification();
+    app.goTo().homePage();
+  }
+
+  public void delete(int index) {
+    selectContact(index);
+    app.acceptNextAlert = true;
+    deleteSelectedContacts();
+    closeDialogWindow();
+    app.goTo().homePage();
+  }
+
   public void initContactModification(int index) {
     driver.findElements(By.xpath("//img[@title='Edit']")).get(index).click();
   }
@@ -70,11 +84,11 @@ public class ContactHelper extends HelperBase {
     driver.findElement(By.cssSelector("div.msgbox"));
   }
 
-  public void createContact(ContactData contactData, boolean creation) {
+  public void create(ContactData contactData, boolean creation) {
     gotoNewContact();
     fillContactForm(contactData, creation);
     submitContactCreation();
-    app.getNavigationHelper().gotoHomePage();
+    app.goTo().homePage();
   }
 
   public boolean isThereAContact() {
@@ -94,7 +108,7 @@ public class ContactHelper extends HelperBase {
     return driver.findElements(By.xpath("//table[@id='maintable']//input[@name='selected[]']")).size();
   }
 
-  public List<ContactData> getContactList() {
+  public List<ContactData> list() {
     List<ContactData> contacts = new ArrayList<ContactData>();
     List<WebElement> elements = driver.findElements(By.cssSelector("tr[name='entry']"));
     for (WebElement element : elements) {
