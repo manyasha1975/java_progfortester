@@ -57,13 +57,13 @@ public class GroupData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupData groupData = (GroupData) o;
-        return Objects.equals(grname, groupData.grname);
+        return grid == groupData.grid &&
+                Objects.equals(grname, groupData.grname);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(grname);
+        return Objects.hash(grid, grname);
     }
-
 }

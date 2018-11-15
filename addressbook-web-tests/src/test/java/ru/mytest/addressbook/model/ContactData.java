@@ -117,14 +117,14 @@ public class ContactData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
-        return Objects.equals(contactFirstName, that.contactFirstName) &&
+        return id == that.id &&
+                Objects.equals(contactFirstName, that.contactFirstName) &&
                 Objects.equals(contactLastName, that.contactLastName);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(contactFirstName, contactLastName);
+        return Objects.hash(id, contactFirstName, contactLastName);
     }
-
 }
