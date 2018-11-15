@@ -23,14 +23,16 @@ public class ContactHelper extends HelperBase {
   }
 
   public void fillContactForm(ContactData contactData, boolean creation) {
-    type(By.name("firstname"), contactData.getContactFirstName());
-    type(By.name("lastname"), contactData.getContactLastName());
-    type(By.name("nickname"), contactData.getContactNickName());
-    type(By.name("title"), contactData.getContactTitle());
-    type(By.name("company"), contactData.getContactCompany());
-    type(By.name("address"), contactData.getContactAddress());
-    type(By.name("mobile"), contactData.getContactMobile());
-    type(By.name("email"), contactData.getContactEmail());
+    type(By.name("firstname"), contactData.getFirstName());
+    type(By.name("lastname"), contactData.getLastName());
+    type(By.name("nickname"), contactData.getNickName());
+    type(By.name("title"), contactData.getTitle());
+    type(By.name("company"), contactData.getCompany());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("home"), contactData.getHomePhone());
+    type(By.name("mobile"), contactData.getMobilePhone());
+    type(By.name("work"), contactData.getWorkPhone());
+    type(By.name("email"), contactData.getEmail());
     if (creation) {
       if (isThereAGroupInList(contactData)) {
         new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -77,8 +79,32 @@ public class ContactHelper extends HelperBase {
     driver.findElements(By.xpath("//img[@title='Edit']")).get(index).click();
   }
 
+  public ContactData infoFromEditForm(ContactData contact) {
+    initContactModificationById(contact.getId());
+    String firstName = driver.findElement(By.name("firstname")).getAttribute("value");
+    String lastName = driver.findElement(By.name("lastname")).getAttribute("value");
+    String home = driver.findElement(By.name("home")).getAttribute("value");
+    String mobile = driver.findElement(By.name("mobile")).getAttribute("value");
+    String work = driver.findElement(By.name("work")).getAttribute("value");
+    driver.navigate().back();
+    return new ContactData().withId(contact.getId()).withFirstName(firstName)
+            .withLastName(lastName).withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
+  }
+
   private void initContactModificationById(int id) {
     driver.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
+    // other methods to find this element "pencil":
+    // 1--
+    // WebElement checkbox = driver.findElement(By.cssSelector(String.format("input[value='%s']", id))); //find checkbox
+    // WebElement row = checkbox.findElement(By.xpath("./../..")); //goto up to parent row
+    // List<WebElement> cells = row.findElements(By.tagName("td")); //read all cells in row
+    // cells.get(7).findElement(By.tagName("a")).click(); //click on link
+    // 2--
+    //driver.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a", id))).click();
+    // 3--
+    //driver.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[8]/a", id))).click();
+    // 4--
+    //driver.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
   }
 
   public void submitContactModification() {
@@ -128,11 +154,14 @@ public class ContactHelper extends HelperBase {
       String lastName = columns.get(1).getText();
       String firstName = columns.get(2).getText();
       String address = columns.get(3).getText();
+      String[] phones = columns.get(5).getText().split("\n"); //cut row, \n - marks where to cut
+      System.out.println(phones[0] + ", " + phones[1] + ", " + phones[2]);
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address);
-      contactCache.add(contact);
-      System.out.println(id + ", " + firstName + ", " + lastName + ", " + address);
+      contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address)
+              .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]));
+      //System.out.println(id + ", " + firstName + ", " + lastName + ", " + address);
     }
     return new Contacts(contactCache);
   }
+
 }

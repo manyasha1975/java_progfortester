@@ -10,7 +10,9 @@ public class ContactData {
     private String contactTitle;
     private String contactCompany;
     private String contactAddress;
-    private String contactMobile;
+    private String contactHomePhone;
+    private String contactMobilePhone;
+    private String contactWorkPhone;
     private String contactEmail;
     private String group;
 
@@ -18,35 +20,43 @@ public class ContactData {
         return id;
     }
 
-    public String getContactFirstName() {
+    public String getFirstName() {
         return contactFirstName;
     }
 
-    public String getContactLastName() {
+    public String getLastName() {
         return contactLastName;
     }
 
-    public String getContactNickName() {
+    public String getNickName() {
         return contactNickName;
     }
 
-    public String getContactTitle() {
+    public String getTitle() {
         return contactTitle;
     }
 
-    public String getContactCompany() {
+    public String getCompany() {
         return contactCompany;
     }
 
-    public String getContactAddress() {
+    public String getAddress() {
         return contactAddress;
     }
 
-    public String getContactMobile() {
-        return contactMobile;
+    public String getHomePhone() {
+        return contactHomePhone;
     }
 
-    public String getContactEmail() {
+    public String getMobilePhone() {
+        return contactMobilePhone;
+    }
+
+    public String getWorkPhone() {
+        return contactWorkPhone;
+    }
+
+    public String getEmail() {
         return contactEmail;
     }
 
@@ -89,8 +99,18 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withMobile(String contactMobile) {
-        this.contactMobile = contactMobile;
+    public ContactData withHomePhone(String contactHomePhone) {
+        this.contactHomePhone = contactHomePhone;
+        return this;
+    }
+
+    public ContactData withMobilePhone(String contactMobilePhone) {
+        this.contactMobilePhone = contactMobilePhone;
+        return this;
+    }
+
+    public ContactData withWorkPhone(String contactWorkPhone) {
+        this.contactWorkPhone = contactWorkPhone;
         return this;
     }
 
@@ -127,4 +147,5 @@ public class ContactData {
 
         return Objects.hash(id, contactFirstName, contactLastName);
     }
+
 }
