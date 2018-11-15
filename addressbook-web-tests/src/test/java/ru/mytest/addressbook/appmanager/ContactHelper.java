@@ -111,7 +111,7 @@ public class ContactHelper extends HelperBase {
     }
   }
 
-  public int getContactCount() {
+  public int count() {
     return driver.findElements(By.xpath("//table[@id='maintable']//input[@name='selected[]']")).size();
   }
 
