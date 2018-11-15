@@ -6,10 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.mytest.addressbook.model.ContactData;
+import ru.mytest.addressbook.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.testng.Assert.assertTrue;
 
@@ -113,8 +112,8 @@ public class ContactHelper extends HelperBase {
     return driver.findElements(By.xpath("//table[@id='maintable']//input[@name='selected[]']")).size();
   }
 
-  public Set<ContactData> all() {
-    Set<ContactData> contacts = new HashSet<>();
+  public Contacts all() {
+    Contacts contacts = new Contacts();
     List<WebElement> elements = driver.findElements(By.cssSelector("tr[name='entry']"));
     for (WebElement element : elements) {
       List<WebElement> columns = element.findElements(By.cssSelector("td"));
@@ -124,9 +123,7 @@ public class ContactHelper extends HelperBase {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address);
       contacts.add(contact);
-      System.out.println(firstName);
-      System.out.println(lastName);
-      System.out.println(address);
+      System.out.println(id + ", " + firstName + ", " + lastName + ", " + address);
     }
     return contacts;
   }
