@@ -15,8 +15,8 @@ public class ContactDeletionTests extends TestBase {
     app.goTo().homePage();
     if (app.contact().all().size() == 0) {
       app.contact().create(new ContactData().withFirstName("Fedor").withLastName("Ivanov").withNickName("Vanilla").withTitle("Dev")
-              .withAddress("Ekaterinburg").withHomePhone("+7 919-234-76-35").withMobilePhone("+79192347651")
-              .withWorkPhone("+7 919 234 76 35").withEmail("fedor@gmail.com").withGroup("Group5"), true);
+              .withAddress("Ekaterinburg").withHomePhone("+7 919-234-76-35").withWorkPhone("+7 919 234 76 35")
+              .withEmail("fedor@gmail.com").withGroup("Group5"), true);
     }
   }
 

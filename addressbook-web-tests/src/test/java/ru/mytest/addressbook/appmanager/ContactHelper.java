@@ -154,11 +154,10 @@ public class ContactHelper extends HelperBase {
       String lastName = columns.get(1).getText();
       String firstName = columns.get(2).getText();
       String address = columns.get(3).getText();
-      String[] phones = columns.get(5).getText().split("\n"); //cut row, \n - marks where to cut
-      System.out.println(phones[0] + ", " + phones[1] + ", " + phones[2]);
+      String allPhones = columns.get(5).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address)
-              .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]));
+              .withAllPhones(allPhones));
       //System.out.println(id + ", " + firstName + ", " + lastName + ", " + address);
     }
     return new Contacts(contactCache);
