@@ -84,12 +84,16 @@ public class ContactHelper extends HelperBase {
     String firstName = driver.findElement(By.name("firstname")).getAttribute("value");
     String lastName = driver.findElement(By.name("lastname")).getAttribute("value");
     String address = driver.findElement(By.name("address")).getText();
+    String email = driver.findElement(By.name("email")).getAttribute("value");
+    String email2 = driver.findElement(By.name("email2")).getAttribute("value");
+    String email3 = driver.findElement(By.name("email3")).getAttribute("value");
     String home = driver.findElement(By.name("home")).getAttribute("value");
     String mobile = driver.findElement(By.name("mobile")).getAttribute("value");
     String work = driver.findElement(By.name("work")).getAttribute("value");
     driver.navigate().back();
     return new ContactData().withId(contact.getId()).withFirstName(firstName).withLastName(lastName)
-            .withAddress(address).withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
+            .withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3)
+            .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
   }
 
   private void initContactModificationById(int id) {
@@ -155,10 +159,11 @@ public class ContactHelper extends HelperBase {
       String lastName = columns.get(1).getText();
       String firstName = columns.get(2).getText();
       String address = columns.get(3).getText();
+      String allEmails = columns.get(4).getText();
       String allPhones = columns.get(5).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address)
-              .withAllPhones(allPhones));
+              .withAllEmails(allEmails).withAllPhones(allPhones));
       //System.out.println(id + ", " + firstName + ", " + lastName + ", " + address);
     }
     return new Contacts(contactCache);
