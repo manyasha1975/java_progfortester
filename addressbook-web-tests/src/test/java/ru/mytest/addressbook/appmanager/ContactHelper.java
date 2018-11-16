@@ -83,12 +83,13 @@ public class ContactHelper extends HelperBase {
     initContactModificationById(contact.getId());
     String firstName = driver.findElement(By.name("firstname")).getAttribute("value");
     String lastName = driver.findElement(By.name("lastname")).getAttribute("value");
+    String address = driver.findElement(By.name("address")).getText();
     String home = driver.findElement(By.name("home")).getAttribute("value");
     String mobile = driver.findElement(By.name("mobile")).getAttribute("value");
     String work = driver.findElement(By.name("work")).getAttribute("value");
     driver.navigate().back();
-    return new ContactData().withId(contact.getId()).withFirstName(firstName)
-            .withLastName(lastName).withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
+    return new ContactData().withId(contact.getId()).withFirstName(firstName).withLastName(lastName)
+            .withAddress(address).withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
   }
 
   private void initContactModificationById(int id) {
