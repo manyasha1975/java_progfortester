@@ -1,11 +1,19 @@
 package ru.mytest.addressbook.model;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.util.Objects;
 
+@XStreamAlias("group") //set name for tag, more convenient name
 public class GroupData {
+    @XStreamOmitField //miss this field grid in xml file
     private int grid = Integer.MAX_VALUE;
+    @XStreamAlias("name")
     private String grname;
+    @XStreamAlias("header")
     private String grheader;
+    @XStreamAlias("footer")
     private String grfooter;
 
     public int getGrid() {
