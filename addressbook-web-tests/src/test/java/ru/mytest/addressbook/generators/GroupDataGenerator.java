@@ -21,13 +21,13 @@ public class GroupDataGenerator {
   public String file;
 
   public static void main(String[] args) throws IOException {
-    //we get two parameters - count of group and path to file in which data to generate
+    //we get two parameters - count of group and file path to which data to generate
     GroupDataGenerator generator = new GroupDataGenerator();
     JCommander jCommander = new JCommander(generator); //jcommander is library for work with command line
     try {
-      jCommander.parse(args);  // get some args from command line
+      jCommander.parse(args);  // to get some args from command line and try to parse
     } catch (ParameterException ex) {
-      jCommander.usage(); //if parameters are incorrect, jcommander send how to use this GroupDataGenerator program
+      jCommander.usage(); //if parameters are incorrect, jcommander sends how to use this GroupDataGenerator program
       return;
     }
     generator.run();

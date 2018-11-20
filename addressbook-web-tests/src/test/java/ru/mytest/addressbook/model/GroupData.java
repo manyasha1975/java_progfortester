@@ -46,7 +46,7 @@ public class GroupData {
 
     @Override
     public String toString() {
-        return "GroupData{" +
+        return "GroupData{" +    //we see in report these data, we can change it and add other parameters, header or footer
                 "grid=" + grid +
                 ", grname='" + grname + '\'' +
                 '}';
