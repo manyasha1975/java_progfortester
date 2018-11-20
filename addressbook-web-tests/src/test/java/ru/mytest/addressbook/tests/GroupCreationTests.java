@@ -1,5 +1,7 @@
 package ru.mytest.addressbook.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -51,7 +53,27 @@ public class GroupCreationTests extends TestBase {
     // -> collect in list by Collectors -> return iterator (to provide next data for test)
   }
 
-  @Test(dataProvider = "validGroupsXml")
+  @DataProvider //with using DataProvider we separate data from test scenario
+  public Iterator<Object[]> validGroupsJson() throws IOException {
+    //open file for reading
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.json")));
+    //BufferedReader allows to read the whole row from file (method readLine)
+    String json = ""; //create empty row to which we will add all rows from file. It needs for method fromJson (it works with String format)
+    String line = reader.readLine();
+    while (line != null) {
+      json += line; //add row to xml while get end of file
+      line = reader.readLine();
+    }
+    Gson gson = new Gson();
+    List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType());
+    //TypeToken<List<GroupData>>(){}.getType() - special construction to get type of data in which we need data from JSON file
+    //for other types of data (without <>, usual objects, not lists) we can set GroupData.class, for example (to point needed type)
+    return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+    //list -> stream -> map applies to all elements some function (in this case - converts every element to Object[] type) ->
+    // -> collect in list by Collectors -> return iterator (to provide next data for test)
+  }
+
+  @Test(dataProvider = "validGroupsJson")
   public void testGroupCreation(GroupData group) throws Exception {
     app.goTo().groupPage();
     Groups before = app.group().all();

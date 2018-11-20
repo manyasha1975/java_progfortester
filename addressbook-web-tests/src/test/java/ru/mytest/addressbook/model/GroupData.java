@@ -1,5 +1,6 @@
 package ru.mytest.addressbook.model;
 
+import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -7,13 +8,16 @@ import java.util.Objects;
 
 @XStreamAlias("group") //set name for tag, more convenient name
 public class GroupData {
-    @XStreamOmitField //miss this field grid in xml file
+    @XStreamOmitField //miss this field in xml file
     private int grid = Integer.MAX_VALUE;
-    @XStreamAlias("name")
+    @XStreamAlias("name") //set name for tag
+    @Expose //include this field in json file
     private String grname;
-    @XStreamAlias("header")
+    @Expose //include this field in json file
+    @XStreamAlias("header") //set name for tag
     private String grheader;
-    @XStreamAlias("footer")
+    @Expose //include this field in json file
+    @XStreamAlias("footer") //set name for tag
     private String grfooter;
 
     public int getGrid() {
