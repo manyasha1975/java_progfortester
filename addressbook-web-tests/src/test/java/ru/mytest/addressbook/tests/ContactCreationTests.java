@@ -23,57 +23,59 @@ public class ContactCreationTests extends TestBase {
   public Iterator<Object[]> validContactsCsv() throws IOException {
     List<Object[]> list = new ArrayList<Object[]>();
     //open file for reading
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.csv")));
-    //BufferedReader allows to read the whole row from file (method readLine)
-    String line = reader.readLine();
-    while (line != null) {
-      String[] split = line.split(";"); //to cut row by ;-separator
-      list.add(new Object[] {new ContactData().withFirstName(split[0]).withLastName(split[1]).withNickName(split[2])
-              .withCompany(split[3]).withAddress(split[4]).withMobilePhone(split[5]).withEmail(split[6]).withGroup(split[7])});
-      line = reader.readLine();
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.csv")))) {
+      //BufferedReader allows to read the whole row from file (method readLine)
+      String line = reader.readLine();
+      while (line != null) {
+        String[] split = line.split(";"); //to cut row by ;-separator
+        list.add(new Object[]{new ContactData().withFirstName(split[0]).withLastName(split[1]).withNickName(split[2])
+                .withCompany(split[3]).withAddress(split[4]).withMobilePhone(split[5]).withEmail(split[6]).withGroup(split[7])});
+        line = reader.readLine();
+      }
+      return list.iterator(); //Test framework TestNG organizes cycle and give objects from list to test
     }
-    return list.iterator(); //Test framework TestNG organizes cycle and give objects from list to test
   }
 
   @DataProvider
   public Iterator<Object[]> validContactsXml() throws IOException {
-    List<Object[]> list = new ArrayList<Object[]>();
     //open file for reading
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")));
-    //BufferedReader allows to read the whole row from file (method readLine)
-    String xml = ""; //create empty row to which we will add all rows from file. It needs for method fromXML (it works with String format)
-    String line = reader.readLine();
-    while (line != null) {
-      xml += line; //add row to xml while get end of file
-      line = reader.readLine();
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")))) {
+      //BufferedReader allows to read the whole row from file (method readLine)
+      String xml = ""; //create empty row to which we will add all rows from file. It needs for method fromXML (it works with String format)
+      String line = reader.readLine();
+      while (line != null) {
+        xml += line; //add row to xml while get end of file
+        line = reader.readLine();
+      }
+      XStream xStream = new XStream();
+      xStream.processAnnotations(ContactData.class);
+      List<ContactData> contacts = (List<ContactData>) xStream.fromXML(xml); //we set needed type of object to convert result of fromXML method
+      return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
+      //list -> stream -> map applies to all elements some function (in this case - converts every element to Object[] type) ->
+      // -> collect in list by Collectors -> return iterator (to provide next data for test)
     }
-    XStream xStream = new XStream();
-    xStream.processAnnotations(ContactData.class);
-    List<ContactData> contacts = (List<ContactData>) xStream.fromXML(xml); //we set needed type of object to convert result of fromXML method
-    return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
-    //list -> stream -> map applies to all elements some function (in this case - converts every element to Object[] type) ->
-    // -> collect in list by Collectors -> return iterator (to provide next data for test)
   }
 
   @DataProvider
   public Iterator<Object[]> validContactsJson() throws IOException {
-    List<Object[]> list = new ArrayList<Object[]>();
     //open file for reading
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")));
-    //BufferedReader allows to read the whole row from file (method readLine)
-    String json = ""; //create empty row to which we will add all rows from file. It needs for method fromJson (it works with String format)
-    String line = reader.readLine();
-    while (line != null) {
-      json += line; //add row to xml while get end of file
-      line = reader.readLine();
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) {
+      //BufferedReader allows to read the whole row from file (method readLine)
+      String json = ""; //create empty row to which we will add all rows from file. It needs for method fromJson (it works with String format)
+      String line = reader.readLine();
+      while (line != null) {
+        json += line; //add row to xml while get end of file
+        line = reader.readLine();
+      }
+      Gson gson = new Gson();
+      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {
+      }.getType());
+      //TypeToken<List<GroupData>>(){}.getType() - special construction to get type of data in which we need data from JSON file
+      //for other types of data (without <>, usual objects, not lists) we can set GroupData.class, for example (to point needed type)
+      return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
+      //list -> stream -> map applies to all elements some function (in this case - converts every element to Object[] type) ->
+      // -> collect in list by Collectors -> return iterator (to provide next data for test)
     }
-    Gson gson = new Gson();
-    List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
-    //TypeToken<List<GroupData>>(){}.getType() - special construction to get type of data in which we need data from JSON file
-    //for other types of data (without <>, usual objects, not lists) we can set GroupData.class, for example (to point needed type)
-    return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
-    //list -> stream -> map applies to all elements some function (in this case - converts every element to Object[] type) ->
-    // -> collect in list by Collectors -> return iterator (to provide next data for test)
   }
 
   @Test(dataProvider = "validContactsJson")

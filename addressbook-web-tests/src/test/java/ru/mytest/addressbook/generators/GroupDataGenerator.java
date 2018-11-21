@@ -58,27 +58,28 @@ public class GroupDataGenerator {
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
     //GsonBuilder will create gson in good format
     String json = gson.toJson(groups);
-    Writer writer = new FileWriter(file); //open file to write
-    writer.write(json);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) { //init writer
+      writer.write(json); //using of writer, writer will close automatically after try-block is finished
+    }
   }
 
   private void saveAsXml(List<GroupData> groups, File file) throws IOException {
     XStream xStream = new XStream();
     xStream.processAnnotations(GroupData.class); //to read annotations in GroupData.class
     String xml = xStream.toXML(groups); //to convert object to XML format
-    Writer writer = new FileWriter(file); //open file to write
-    writer.write(xml);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) { //init of writer
+      writer.write(xml);  //using of writer, writer will close automatically after try-block is finished
+    }
   }
 
   private void saveAsCsv(List<GroupData> groups, File file) throws IOException {
     System.out.println(new File(".").getAbsolutePath());
-    Writer writer = new FileWriter(file); //open file to write
-    for (GroupData group : groups) {
-      writer.write(String.format("%s;%s;%s\n", group.getGrname(), group.getGrheader(), group.getGrfooter()));//to write in CSV format (comma-separated-values)
+    try (Writer writer = new FileWriter(file)) { //init writer
+      for (GroupData group : groups) {
+        //to write in CSV format (comma-separated-values)
+        writer.write(String.format("%s;%s;%s\n", group.getGrname(), group.getGrheader(), group.getGrfooter()));
+      }
     }
-    writer.close();
   }
 
   private List<GroupData> generateGroups(int count) {

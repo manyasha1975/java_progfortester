@@ -56,28 +56,29 @@ public class ContactDataGenerator {
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
     //GsonBuilder will create gson in good format
     String json = gson.toJson(contacts);
-    Writer writer = new FileWriter(file); //open file to write
-    writer.write(json);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) { //init writer
+      writer.write(json); //using of writer, writer will close automatically after try-block is finished
+    }
   }
 
   private void saveAsXml(List<ContactData> contacts, File file) throws IOException {
     XStream xStream = new XStream();
     xStream.processAnnotations(ContactData.class); //read annotations in ContactData.class
     String xml = xStream.toXML(contacts);
-    Writer writer = new FileWriter(file);
-    writer.write(xml);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) { //init writer
+      writer.write(xml); //using of writer, writer will close automatically after try-block is finished
+    }
   }
 
   private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
     System.out.println(new File(".").getAbsolutePath());
-    Writer writer = new FileWriter(file);  //open file to write
-    for (ContactData contact : contacts) {  //to write in CSV format (comma-separated-values)
-      writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s\n", contact.getFirstName(), contact.getLastName(), contact.getNickName()
-              , contact.getCompany(), contact.getAddress(), contact.getMobilePhone(), contact.getEmail(), contact.getGroup()));
+    try (Writer writer = new FileWriter(file)) { //init writer
+      for (ContactData contact : contacts) {
+        //to write in CSV format (comma-separated-values)
+        writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s\n", contact.getFirstName(), contact.getLastName(), contact.getNickName()
+                , contact.getCompany(), contact.getAddress(), contact.getMobilePhone(), contact.getEmail(), contact.getGroup()));
+      }
     }
-    writer.close();
   }
 
   private List<ContactData> generateContacts(int count) {
