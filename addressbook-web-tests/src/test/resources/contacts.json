@@ -6,7 +6,8 @@
     "contactCompany": "Company 0",
     "contactAddress": "City 0",
     "contactMobilePhone": "+79121234560",
-    "contactEmail": "email0@mail.com"
+    "contactEmail": "email0@mail.com",
+    "group": "group 0"
   },
   {
     "contactFirstName": "Fedor 1",
@@ -15,7 +16,8 @@
     "contactCompany": "Company 1",
     "contactAddress": "City 1",
     "contactMobilePhone": "+79121234561",
-    "contactEmail": "email1@mail.com"
+    "contactEmail": "email1@mail.com",
+    "group": "group 1"
   },
   {
     "contactFirstName": "Fedor 2",
@@ -24,7 +26,8 @@
     "contactCompany": "Company 2",
     "contactAddress": "City 2",
     "contactMobilePhone": "+79121234562",
-    "contactEmail": "email2@mail.com"
+    "contactEmail": "email2@mail.com",
+    "group": "group 2"
   },
   {
     "contactFirstName": "Fedor 3",
@@ -33,7 +36,8 @@
     "contactCompany": "Company 3",
     "contactAddress": "City 3",
     "contactMobilePhone": "+79121234563",
-    "contactEmail": "email3@mail.com"
+    "contactEmail": "email3@mail.com",
+    "group": "group 3"
   },
   {
     "contactFirstName": "Fedor 4",
@@ -42,6 +46,7 @@
     "contactCompany": "Company 4",
     "contactAddress": "City 4",
     "contactMobilePhone": "+79121234564",
-    "contactEmail": "email4@mail.com"
+    "contactEmail": "email4@mail.com",
+    "group": "group 4"
   }
 ]

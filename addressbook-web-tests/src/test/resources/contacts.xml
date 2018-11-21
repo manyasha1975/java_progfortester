@@ -7,6 +7,7 @@
     <contactAddress>City 0</contactAddress>
     <contactMobilePhone>+79121234560</contactMobilePhone>
     <contactEmail>email0@mail.com</contactEmail>
+    <group>group 0</group>
   </contact>
   <contact>
     <contactFirstName>Fedor 1</contactFirstName>
@@ -16,6 +17,7 @@
     <contactAddress>City 1</contactAddress>
     <contactMobilePhone>+79121234561</contactMobilePhone>
     <contactEmail>email1@mail.com</contactEmail>
+    <group>group 1</group>
   </contact>
   <contact>
     <contactFirstName>Fedor 2</contactFirstName>
@@ -25,6 +27,7 @@
     <contactAddress>City 2</contactAddress>
     <contactMobilePhone>+79121234562</contactMobilePhone>
     <contactEmail>email2@mail.com</contactEmail>
+    <group>group 2</group>
   </contact>
   <contact>
     <contactFirstName>Fedor 3</contactFirstName>
@@ -34,6 +37,7 @@
     <contactAddress>City 3</contactAddress>
     <contactMobilePhone>+79121234563</contactMobilePhone>
     <contactEmail>email3@mail.com</contactEmail>
+    <group>group 3</group>
   </contact>
   <contact>
     <contactFirstName>Fedor 4</contactFirstName>
@@ -43,5 +47,6 @@
     <contactAddress>City 4</contactAddress>
     <contactMobilePhone>+79121234564</contactMobilePhone>
     <contactEmail>email4@mail.com</contactEmail>
+    <group>group 4</group>
   </contact>
 </list>
