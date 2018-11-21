@@ -1,20 +1,33 @@
 package ru.mytest.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.io.File;
 import java.util.Objects;
 
+@XStreamAlias("contact") //set tag name
 public class ContactData {
+    @XStreamOmitField //miss this field
     private int id = Integer.MAX_VALUE;
+    @Expose
     private String contactFirstName;
+    @Expose
     private String contactLastName;
+    @Expose
     private String contactNickName;
     private String contactTitle;
+    @Expose
     private String contactCompany;
+    @Expose
     private String contactAddress;
     private String contactHomePhone;
+    @Expose
     private String contactMobilePhone;
     private String contactWorkPhone;
     private String allPhones;
+    @Expose
     private String contactEmail;
     private String contactEmail2;
     private String contactEmail3;
