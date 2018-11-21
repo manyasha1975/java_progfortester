@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.mytest.addressbook.tests.GroupCreationTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2018-11-21T17:28:00" hostname="DESKTOP-DESA7NM" time="11.621">
+  <properties/>
+  <testcase name="testGroupCreation[0](GroupData{grid=2147483647, grname='group 0'})" classname="ru.mytest.addressbook.tests.GroupCreationTests" time="5.793"/>
+  <testcase name="testGroupCreation[1](GroupData{grid=2147483647, grname='group 1'})" classname="ru.mytest.addressbook.tests.GroupCreationTests" time="2.871"/>
+  <testcase name="testGroupCreation[2](GroupData{grid=2147483647, grname='group 2'})" classname="ru.mytest.addressbook.tests.GroupCreationTests" time="2.957"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: NetworkError when attempting to fetch resource..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:721:13
+
+]]></system-err>
+</testsuite>
