@@ -8,45 +8,5 @@
     "contactMobilePhone": "+79121234560",
     "contactEmail": "email0@mail.com",
     "group": "group 0"
-  },
-  {
-    "contactFirstName": "Fedor 1",
-    "contactLastName": "Petrov 1",
-    "contactNickName": "Fedora 1",
-    "contactCompany": "Company 1",
-    "contactAddress": "City 1",
-    "contactMobilePhone": "+79121234561",
-    "contactEmail": "email1@mail.com",
-    "group": "group 1"
-  },
-  {
-    "contactFirstName": "Fedor 2",
-    "contactLastName": "Petrov 2",
-    "contactNickName": "Fedora 2",
-    "contactCompany": "Company 2",
-    "contactAddress": "City 2",
-    "contactMobilePhone": "+79121234562",
-    "contactEmail": "email2@mail.com",
-    "group": "group 2"
-  },
-  {
-    "contactFirstName": "Fedor 3",
-    "contactLastName": "Petrov 3",
-    "contactNickName": "Fedora 3",
-    "contactCompany": "Company 3",
-    "contactAddress": "City 3",
-    "contactMobilePhone": "+79121234563",
-    "contactEmail": "email3@mail.com",
-    "group": "group 3"
-  },
-  {
-    "contactFirstName": "Fedor 4",
-    "contactLastName": "Petrov 4",
-    "contactNickName": "Fedora 4",
-    "contactCompany": "Company 4",
-    "contactAddress": "City 4",
-    "contactMobilePhone": "+79121234564",
-    "contactEmail": "email4@mail.com",
-    "group": "group 4"
   }
 ]
