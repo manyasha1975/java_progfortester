@@ -3,21 +3,38 @@ package ru.mytest.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @XStreamAlias("group") //set name for tag, more convenient name
+@Entity //declare that GroupData linked to database
+@Table (name = "group_list") //set needed table name
 public class GroupData {
     @XStreamOmitField //miss this field in xml file
+    @Id //because this parameter is identifier
+    @Column (name = "group_id")
     private int grid = Integer.MAX_VALUE;
+
     @XStreamAlias("name") //set name for tag
     @Expose //include this field in json file
+    @Column (name = "group_name")
     private String grname;
+
     @Expose //include this field in json file
     @XStreamAlias("header") //set name for tag
+    @Column (name = "group_header")
+    @Type(type = "text") //convert type of data to text
     private String grheader;
+
     @Expose //include this field in json file
     @XStreamAlias("footer") //set name for tag
+    @Column (name = "group_footer")
+    @Type(type = "text") //convert type of data to text
     private String grfooter;
 
     public int getGrid() {
@@ -58,9 +75,11 @@ public class GroupData {
 
     @Override
     public String toString() {
-        return "GroupData{" +    //we see in report these data, we can change it and add other parameters, header or footer
+        return "GroupData{" +
                 "grid=" + grid +
                 ", grname='" + grname + '\'' +
+                ", grheader='" + grheader + '\'' +
+                ", grfooter='" + grfooter + '\'' +
                 '}';
     }
 
@@ -70,12 +89,14 @@ public class GroupData {
         if (o == null || getClass() != o.getClass()) return false;
         GroupData groupData = (GroupData) o;
         return grid == groupData.grid &&
-                Objects.equals(grname, groupData.grname);
+                Objects.equals(grname, groupData.grname) &&
+                Objects.equals(grheader, groupData.grheader) &&
+                Objects.equals(grfooter, groupData.grfooter);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(grid, grname);
+        return Objects.hash(grid, grname, grheader, grfooter);
     }
 }

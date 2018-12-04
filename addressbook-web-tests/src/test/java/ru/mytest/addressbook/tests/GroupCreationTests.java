@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase {
@@ -82,13 +83,17 @@ public class GroupCreationTests extends TestBase {
   @Test(dataProvider = "validGroupsJson")
   public void testGroupCreation(GroupData group) throws Exception {
     app.goTo().groupPage();
-    Groups before = app.group().all();
+    Groups before = app.db().groups();
     app.group().create(group);
     assertThat(app.group().count(), equalTo(before.size() + 1));
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
 
+    int grId = after.stream().mapToInt((g) -> g.getGrid()).max().getAsInt();
     assertThat(after, equalTo(
-            before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getGrid()).max().getAsInt()))));
+            before.withAdded(group.withId(grId)
+                    .withName(app.db().selectGroupById(grId).getGrname())
+                    .withHeader(app.db().selectGroupById(grId).getGrheader())
+                    .withFooter(app.db().selectGroupById(grId).getGrfooter()))));
     }
 
   @Test (enabled = false)

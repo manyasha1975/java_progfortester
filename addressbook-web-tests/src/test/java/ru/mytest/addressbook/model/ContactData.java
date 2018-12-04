@@ -3,38 +3,84 @@ package ru.mytest.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
 @XStreamAlias("contact") //set tag name
+@Entity //declare that ContactData linked to database
+@Table(name = "addressbook") //set needed table name
 public class ContactData {
     @XStreamOmitField //miss this field
+    @Id //because this parameter is identifier
+    @Column (name = "id")
     private int id = Integer.MAX_VALUE;
+
     @Expose
+    @Column (name = "firstname")
     private String contactFirstName;
+
     @Expose
+    @Column (name = "lastname")
     private String contactLastName;
+
     @Expose
+    @Column (name = "nickname")
     private String contactNickName;
+
+    @Column (name = "title")
     private String contactTitle;
+
     @Expose
+    @Column (name = "company")
     private String contactCompany;
+
     @Expose
+    @Column (name = "address")
+    @Type(type = "text")
     private String contactAddress;
+
+    @Column (name = "home")
+    @Type(type = "text")
     private String contactHomePhone;
+
     @Expose
+    @Column (name = "mobile")
+    @Type(type = "text")
     private String contactMobilePhone;
+
+    @Column (name = "work")
+    @Type(type = "text")
     private String contactWorkPhone;
+
+    @Transient //miss field during getting data from database
     private String allPhones;
+
     @Expose
+    @Column (name = "email")
+    @Type(type = "text")
     private String contactEmail;
+
+    @Column (name = "email2")
+    @Type(type = "text")
     private String contactEmail2;
+
+    @Column (name = "email3")
+    @Type(type = "text")
     private String contactEmail3;
+
+    @Transient //miss field during getting data from database
     private String allEmails;
+
     @Expose
+    @Transient //miss field during getting data from database
     private String group;
-    private File photo;
+
+    @Column (name = "photo")
+    @Type(type = "text")
+    private String photo;
 
     public int getId() {
         return id;
@@ -101,7 +147,7 @@ public class ContactData {
     }
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public ContactData withId(int id) {
@@ -185,7 +231,7 @@ public class ContactData {
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
