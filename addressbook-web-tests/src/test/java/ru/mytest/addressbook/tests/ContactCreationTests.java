@@ -81,17 +81,27 @@ public class ContactCreationTests extends TestBase {
   @Test(dataProvider = "validContactsJson")
   public void testContactCreation(ContactData contact) throws Exception {
     app.goTo().homePage();
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     //File photo = new File("src/test/resources/stru.png");
     //ContactData contact = new ContactData().withFirstName("Fedor11").withLastName("Sidorov").withNickName("Fedora11")
     //        .withTitle("Tester11").withAddress("Ekaterinburg11").withMobilePhone("+7(919)2347675")
-    //        .withWorkPhone("+7 919 234 76 75").withEmail("fedor@gmail.com").withGroup("Group4").withPhoto(photo);
+    //        .withWorkPhone("+7 919 234 76 75").withEmail("fedor@gmail.com").withGroup("[none]").withPhoto(photo);
     app.contact().create(contact, true);
     assertThat(app.contact().count(), equalTo(before.size() + 1));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
 
+    int id = after.stream().mapToInt((c) -> c.getId()).max().getAsInt();
     assertThat(after, equalTo(
-            before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+            before.withAdded(contact.withId(id).withFirstName(app.db().selectContactById(id).getFirstName())
+                    .withLastName(app.db().selectContactById(id).getLastName())
+                    .withNickName(app.db().selectContactById(id).getNickName())
+                    .withTitle(app.db().selectContactById(id).getTitle())
+                    .withCompany(app.db().selectContactById(id).getCompany())
+                    .withAddress(app.db().selectContactById(id).getAddress())
+                    .withHomePhone(app.db().selectContactById(id).getHomePhone())
+                    .withMobilePhone(app.db().selectContactById(id).getMobilePhone())
+                    .withWorkPhone(app.db().selectContactById(id).getWorkPhone())
+                    .withEmail(app.db().selectContactById(id).getEmail()))));
     }
 
     @Test (enabled = false)
