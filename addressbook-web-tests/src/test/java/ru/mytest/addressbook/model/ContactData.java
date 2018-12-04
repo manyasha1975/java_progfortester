@@ -238,8 +238,20 @@ public class ContactData {
     @Override
     public String toString() {
         return "ContactData{" +
-                "contactFirstName='" + contactFirstName + '\'' +
+                "id=" + id +
+                ", contactFirstName='" + contactFirstName + '\'' +
                 ", contactLastName='" + contactLastName + '\'' +
+                ", contactNickName='" + contactNickName + '\'' +
+                ", contactTitle='" + contactTitle + '\'' +
+                ", contactCompany='" + contactCompany + '\'' +
+                ", contactAddress='" + contactAddress + '\'' +
+                ", contactHomePhone='" + contactHomePhone + '\'' +
+                ", contactMobilePhone='" + contactMobilePhone + '\'' +
+                ", contactWorkPhone='" + contactWorkPhone + '\'' +
+                ", contactEmail='" + contactEmail + '\'' +
+                ", contactEmail2='" + contactEmail2 + '\'' +
+                ", contactEmail3='" + contactEmail3 + '\'' +
+                ", group='" + group + '\'' +
                 '}';
     }
 
@@ -250,13 +262,20 @@ public class ContactData {
         ContactData that = (ContactData) o;
         return id == that.id &&
                 Objects.equals(contactFirstName, that.contactFirstName) &&
-                Objects.equals(contactLastName, that.contactLastName);
+                Objects.equals(contactLastName, that.contactLastName) &&
+                Objects.equals(contactNickName, that.contactNickName) &&
+                Objects.equals(contactTitle, that.contactTitle) &&
+                Objects.equals(contactCompany, that.contactCompany) &&
+                Objects.equals(contactAddress, that.contactAddress) &&
+                Objects.equals(contactHomePhone, that.contactHomePhone) &&
+                Objects.equals(contactMobilePhone, that.contactMobilePhone) &&
+                Objects.equals(contactWorkPhone, that.contactWorkPhone) &&
+                Objects.equals(contactEmail, that.contactEmail);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, contactFirstName, contactLastName);
+        return Objects.hash(id, contactFirstName, contactLastName, contactNickName, contactTitle, contactCompany, contactAddress, contactHomePhone, contactMobilePhone, contactWorkPhone, contactEmail);
     }
-
 }
