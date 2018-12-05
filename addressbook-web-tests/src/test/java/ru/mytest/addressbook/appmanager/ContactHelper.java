@@ -53,10 +53,10 @@ public class ContactHelper extends HelperBase {
 
   public void ensurePreconditions() {
     File photo = new File("src/test/resources/stru.png");
-    app.group().ensurePreconditions();
     app.goTo().homePage();
     if (app.db().contacts().size() == 0) {
-        app.contact().create(new ContactData().withFirstName("Fedor").withLastName("Ivanov").withNickName("Vanilla").withTitle("Dev")
+      app.group().ensurePreconditions();
+      app.contact().create(new ContactData().withFirstName("Fedor").withLastName("Ivanov").withNickName("Vanilla").withTitle("Dev")
                 .withCompany("My company").withAddress("Ekaterinburg").withHomePhone("+7 919-234-76-45").withMobilePhone("+79192347641")
                 .withWorkPhone("8 (911) 123 45 67").withEmail("fedor@gmail.com").withEmail2("fedor2@gmail.com")
                 .withEmail3("fedor3@gmail.com").inGroup(app.db().groups().iterator().next()).withPhoto(photo), true);
@@ -100,6 +100,9 @@ public class ContactHelper extends HelperBase {
     initContactModificationById(contact.getId());
     String firstName = driver.findElement(By.name("firstname")).getAttribute("value");
     String lastName = driver.findElement(By.name("lastname")).getAttribute("value");
+    String nickName = driver.findElement(By.name("nickname")).getAttribute("value");
+    String title = driver.findElement(By.name("title")).getAttribute("value");
+    String company = driver.findElement(By.name("company")).getAttribute("value");
     String address = driver.findElement(By.name("address")).getText();
     String email = driver.findElement(By.name("email")).getAttribute("value");
     String email2 = driver.findElement(By.name("email2")).getAttribute("value");
@@ -109,7 +112,8 @@ public class ContactHelper extends HelperBase {
     String work = driver.findElement(By.name("work")).getAttribute("value");
     driver.navigate().back();
     return new ContactData().withId(contact.getId()).withFirstName(firstName).withLastName(lastName)
-            .withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3)
+            .withNickName(nickName).withTitle(title).withCompany(company).withAddress(address)
+            .withEmail(email).withEmail2(email2).withEmail3(email3)
             .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
   }
 
