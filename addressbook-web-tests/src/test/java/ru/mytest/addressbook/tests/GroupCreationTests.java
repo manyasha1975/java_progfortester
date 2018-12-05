@@ -94,6 +94,7 @@ public class GroupCreationTests extends TestBase {
                     .withName(app.db().selectGroupById(grId).getGrname())
                     .withHeader(app.db().selectGroupById(grId).getGrheader())
                     .withFooter(app.db().selectGroupById(grId).getGrfooter()))));
+    verifyGroupListInUI();
     }
 
   @Test (enabled = false)

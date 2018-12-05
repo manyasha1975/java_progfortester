@@ -101,11 +101,14 @@ public class ContactCreationTests extends TestBase {
                     .withHomePhone(app.db().selectContactById(id).getHomePhone())
                     .withMobilePhone(app.db().selectContactById(id).getMobilePhone())
                     .withWorkPhone(app.db().selectContactById(id).getWorkPhone())
-                    .withEmail(app.db().selectContactById(id).getEmail()))));
+                    .withEmail(app.db().selectContactById(id).getEmail())
+                    .withEmail2(app.db().selectContactById(id).getEmail2())
+                    .withEmail3(app.db().selectContactById(id).getEmail3()))));
+    verifyContactListInUI();
     }
 
     @Test (enabled = false)
-  public void testCurrentDir() {
+    public void testCurrentDir() {
     File currentDir = new File(".");
     System.out.println(currentDir.getAbsolutePath());
     File photo = new File("src/test/resources/stru.png");

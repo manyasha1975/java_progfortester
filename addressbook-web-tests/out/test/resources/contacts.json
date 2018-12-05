@@ -10,6 +10,8 @@
     "contactMobilePhone": "+79121234560",
     "contactWorkPhone": "8 (911) 123 45 60",
     "contactEmail": "email0@mail.com",
+    "contactEmail2": "email0_2@mail.com",
+    "contactEmail3": "email0_3@mail.com",
     "group": "group 0"
   },
   {
@@ -23,6 +25,8 @@
     "contactMobilePhone": "+79121234561",
     "contactWorkPhone": "8 (911) 123 45 61",
     "contactEmail": "email1@mail.com",
+    "contactEmail2": "email1_2@mail.com",
+    "contactEmail3": "email1_3@mail.com",
     "group": "group 1"
   },
   {
@@ -36,6 +40,8 @@
     "contactMobilePhone": "+79121234562",
     "contactWorkPhone": "8 (911) 123 45 62",
     "contactEmail": "email2@mail.com",
+    "contactEmail2": "email2_2@mail.com",
+    "contactEmail3": "email2_3@mail.com",
     "group": "group 2"
   }
 ]
