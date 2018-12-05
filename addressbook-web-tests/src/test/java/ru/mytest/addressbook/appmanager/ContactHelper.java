@@ -9,6 +9,7 @@ import ru.mytest.addressbook.model.ContactData;
 import ru.mytest.addressbook.model.Contacts;
 import ru.mytest.addressbook.tests.ContactPhoneTests;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,17 +39,27 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"), contactData.getEmail());
     type(By.name("email2"), contactData.getEmail2());
     type(By.name("email3"), contactData.getEmail3());
-    //attach(By.name("photo"), contactData.getPhoto());
+    attach(By.name("photo"), contactData.getPhoto());
     if (creation) {
       if (isThereAGroupInList(contactData)) {
-        new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getGrname());
       } else {
         new Select(driver.findElement(By.name("new_group"))).selectByVisibleText("[none]");
-        /*app.group().create(new GroupData(contactData.getGroup(), null, null));
-        create(contactData, creation);*/
       }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }
+  }
+
+  public void ensurePreconditions() {
+    File photo = new File("src/test/resources/stru.png");
+    app.group().ensurePreconditions();
+    app.goTo().homePage();
+    if (app.db().contacts().size() == 0) {
+        app.contact().create(new ContactData().withFirstName("Fedor").withLastName("Ivanov").withNickName("Vanilla").withTitle("Dev")
+                .withCompany("My company").withAddress("Ekaterinburg").withHomePhone("+7 919-234-76-45").withMobilePhone("+79192347641")
+                .withWorkPhone("8 (911) 123 45 67").withEmail("fedor@gmail.com").withEmail2("fedor2@gmail.com")
+                .withEmail3("fedor3@gmail.com").inGroup(app.db().groups().iterator().next()).withPhoto(photo), true);
     }
   }
 
@@ -141,7 +152,7 @@ public class ContactHelper extends HelperBase {
 
   public boolean isThereAGroupInList(ContactData contactData) {
     try {
-      new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getGrname());
       return true;
     } catch (NoSuchElementException e) {
       return false;

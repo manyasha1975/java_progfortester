@@ -3,10 +3,13 @@ package ru.mytest.addressbook.tests;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.mytest.addressbook.model.ContactData;
 import ru.mytest.addressbook.model.Contacts;
+import ru.mytest.addressbook.model.Groups;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -28,8 +31,9 @@ public class ContactCreationTests extends TestBase {
       String line = reader.readLine();
       while (line != null) {
         String[] split = line.split(";"); //to cut row by ;-separator
-        list.add(new Object[]{new ContactData().withFirstName(split[0]).withLastName(split[1]).withNickName(split[2])
-                .withCompany(split[3]).withAddress(split[4]).withMobilePhone(split[5]).withEmail(split[6]).withGroup(split[7])});
+        list.add(new Object[]{new ContactData().withFirstName(split[0]).withLastName(split[1]).withNickName(split[2]).withTitle(split[3])
+                .withCompany(split[4]).withAddress(split[5]).withHomePhone(split[6]).withMobilePhone(split[7]).withWorkPhone(split[8])
+                .withEmail(split[9]).withEmail2(split[10]).withEmail3(split[11])});
         line = reader.readLine();
       }
       return list.iterator(); //Test framework TestNG organizes cycle and give objects from list to test
@@ -78,15 +82,17 @@ public class ContactCreationTests extends TestBase {
     }
   }
 
+  @BeforeTest
+  public void ensurePreconditions() {
+    app.group().ensurePreconditions();
+  }
+
   @Test(dataProvider = "validContactsJson")
   public void testContactCreation(ContactData contact) throws Exception {
+    File photo = new File("src/test/resources/Avatar1.png");
     app.goTo().homePage();
     Contacts before = app.db().contacts();
-    //File photo = new File("src/test/resources/stru.png");
-    //ContactData contact = new ContactData().withFirstName("Fedor11").withLastName("Sidorov").withNickName("Fedora11")
-    //        .withTitle("Tester11").withAddress("Ekaterinburg11").withMobilePhone("+7(919)2347675")
-    //        .withWorkPhone("+7 919 234 76 75").withEmail("fedor@gmail.com").withGroup("[none]").withPhoto(photo);
-    app.contact().create(contact, true);
+    app.contact().create(contact.inGroup(app.db().groups().iterator().next()).withPhoto(photo), true);
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.db().contacts();
 

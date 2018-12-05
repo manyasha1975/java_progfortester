@@ -9,10 +9,9 @@
     "contactHomePhone": "+7 919-234-76-40",
     "contactMobilePhone": "+79121234560",
     "contactWorkPhone": "8 (911) 123 45 60",
-    "contactEmail": "email0@mail.com",
-    "contactEmail2": "email0_2@mail.com",
-    "contactEmail3": "email0_3@mail.com",
-    "group": "group 0"
+    "contactEmail": "email_0@mail.com",
+    "contactEmail2": "email2_0@mail.com",
+    "contactEmail3": "email3_0@mail.com"
   },
   {
     "contactFirstName": "Fedor 1",
@@ -24,10 +23,9 @@
     "contactHomePhone": "+7 919-234-76-41",
     "contactMobilePhone": "+79121234561",
     "contactWorkPhone": "8 (911) 123 45 61",
-    "contactEmail": "email1@mail.com",
-    "contactEmail2": "email1_2@mail.com",
-    "contactEmail3": "email1_3@mail.com",
-    "group": "group 1"
+    "contactEmail": "email_1@mail.com",
+    "contactEmail2": "email2_1@mail.com",
+    "contactEmail3": "email3_1@mail.com"
   },
   {
     "contactFirstName": "Fedor 2",
@@ -39,9 +37,8 @@
     "contactHomePhone": "+7 919-234-76-42",
     "contactMobilePhone": "+79121234562",
     "contactWorkPhone": "8 (911) 123 45 62",
-    "contactEmail": "email2@mail.com",
+    "contactEmail": "email_2@mail.com",
     "contactEmail2": "email2_2@mail.com",
-    "contactEmail3": "email2_3@mail.com",
-    "group": "group 2"
+    "contactEmail3": "email3_2@mail.com"
   }
 ]
