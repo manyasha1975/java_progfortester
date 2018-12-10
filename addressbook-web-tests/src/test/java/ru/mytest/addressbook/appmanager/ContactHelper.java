@@ -5,8 +5,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-import ru.mytest.addressbook.model.ContactData;
-import ru.mytest.addressbook.model.Contacts;
+import ru.mytest.addressbook.model.*;
 import ru.mytest.addressbook.tests.ContactPhoneTests;
 
 import java.io.File;
@@ -41,7 +40,10 @@ public class ContactHelper extends HelperBase {
     type(By.name("email3"), contactData.getEmail3());
     attach(By.name("photo"), contactData.getPhoto());
     if (creation) {
-      if (isThereAGroupInList(contactData)) {
+      //if (isThereAGroupInList(contactData)) {
+      if (contactData.getGroups().size() > 0) {
+        //verify that we have only one group in input data of contact for creation
+        Assert.assertTrue(contactData.getGroups().size() == 1);
         new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getGrname());
       } else {
         new Select(driver.findElement(By.name("new_group"))).selectByVisibleText("[none]");
@@ -57,9 +59,9 @@ public class ContactHelper extends HelperBase {
     if (app.db().contacts().size() == 0) {
       app.group().ensurePreconditions();
       app.contact().create(new ContactData().withFirstName("Fedor").withLastName("Ivanov").withNickName("Vanilla").withTitle("Dev")
-                .withCompany("My company").withAddress("Ekaterinburg").withHomePhone("+7 919-234-76-45").withMobilePhone("+79192347641")
-                .withWorkPhone("8 (911) 123 45 67").withEmail("fedor@gmail.com").withEmail2("fedor2@gmail.com")
-                .withEmail3("fedor3@gmail.com").inGroup(app.db().groups().iterator().next()).withPhoto(photo), true);
+              .withCompany("My company").withAddress("Ekaterinburg").withHomePhone("+7 919-234-76-45").withMobilePhone("+79192347641")
+              .withWorkPhone("8 (911) 123 45 67").withEmail("fedor@gmail.com").withEmail2("fedor2@gmail.com")
+              .withEmail3("fedor3@gmail.com").inGroup(app.db().groups().iterator().next()).withPhoto(photo), true);
     }
   }
 
@@ -192,7 +194,7 @@ public class ContactHelper extends HelperBase {
 
   public String mergePhones(ContactData contact) {
     return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone()).stream()
-            .filter((s) -> ! s.equals(""))
+            .filter((s) -> !s.equals(""))
             .map(ContactPhoneTests::cleaned)      //map apply cleaned function to all data
             .collect(Collectors.joining("\n"));
     // list -> stream -> filter off null rows -> map for cleaning -> collect by Collector (will join rows with /n delimiter)
@@ -200,7 +202,7 @@ public class ContactHelper extends HelperBase {
 
   public String mergeEmails(ContactData contact) {
     return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3()).stream()
-            .filter((s) -> ! s.equals("")).collect(Collectors.joining("\n"));
+            .filter((s) -> !s.equals("")).collect(Collectors.joining("\n"));
   }
 
   Contacts mergeDbContacts = null;
@@ -217,4 +219,32 @@ public class ContactHelper extends HelperBase {
     return new Contacts(mergeDbContacts);
   }
 
+  public void addToGroup(ContactData contact) {
+    Groups groups = app.db().groups();
+    selectContactById(contact.getId());
+    new Select(driver.findElement(By.name("to_group"))).selectByVisibleText(contact.getGroups().iterator().next().getGrname());
+    click(By.xpath("//input[@value='Add to']"));
+    driver.findElement(By.cssSelector("a[href='./?group=" + contact.getGroups().iterator().next().getGrid() + "']")).click();
+  }
+
+  public boolean isContactInAGroup(ContactData contact) {
+    driver.findElement(By.cssSelector("a[href='view.php?id=" + contact.getId() + "']")).click();
+    int group_id = contact.getGroups().iterator().next().getGrid();
+    try {
+      driver.findElement(By.cssSelector("a[href='./index.php?group=" + group_id + "']"));
+      return true;
+    } catch (NoSuchElementException e) {
+      return false;
+    }
+  }
+
+  public boolean isAnyContactInAGroup(ContactData contact) {
+    try {
+      ContactsInGroup dbContactsInGroupBefore = app.db().contactsInGroup(contact.getGroups().iterator().next().getGrid());
+      return true;
+    } catch (NoSuchElementException e) {
+      return false;
+    }
+  }
 }
+

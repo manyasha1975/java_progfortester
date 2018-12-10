@@ -15,20 +15,20 @@ import java.util.Set;
 @Entity //declare that ContactData linked to database
 @Table(name = "addressbook") //set needed table name
 public class ContactData {
-    @XStreamOmitField //miss this field
+    @XStreamOmitField //miss this field, for XML file
     @Id //because this parameter is identifier
     @Column (name = "id")
     private int id = Integer.MAX_VALUE;
 
-    @Expose
+    @Expose  //include this field, for JSON file
     @Column (name = "firstname")
     private String contactFirstName;
 
-    @Expose
+    @Expose  //include this field, for JSON file
     @Column (name = "lastname")
     private String contactLastName;
 
-    @Expose
+    @Expose   //include this field, for JSON file
     @Column (name = "nickname")
     private String contactNickName;
 
