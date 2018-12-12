@@ -9,6 +9,7 @@ import ru.mytest.addressbook.model.*;
 import ru.mytest.addressbook.tests.ContactPhoneTests;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -220,31 +221,36 @@ public class ContactHelper extends HelperBase {
   }
 
   public void addToGroup(ContactData contact) {
-    Groups groups = app.db().groups();
     selectContactById(contact.getId());
     new Select(driver.findElement(By.name("to_group"))).selectByVisibleText(contact.getGroups().iterator().next().getGrname());
     click(By.xpath("//input[@value='Add to']"));
     driver.findElement(By.cssSelector("a[href='./?group=" + contact.getGroups().iterator().next().getGrid() + "']")).click();
   }
 
-  public boolean isContactInAGroup(ContactData contact) {
-    driver.findElement(By.cssSelector("a[href='view.php?id=" + contact.getId() + "']")).click();
-    int group_id = contact.getGroups().iterator().next().getGrid();
+  public boolean isContactInAGroup(ContactData contact, GroupData group) {
+    boolean isHave = true;
+    System.out.println("3. " + contact.getGroups());
+    System.out.println("4. " + group.getContacts());
+    //GroupData chosenGroup = contact.getGroups().iterator().next();
     try {
-      driver.findElement(By.cssSelector("a[href='./index.php?group=" + group_id + "']"));
-      return true;
+      Contacts contactsInAGroup = group.getContacts();
     } catch (NoSuchElementException e) {
-      return false;
+      isHave = false;
     }
+    if (isHave) {
+      Contacts contactsInAGroup = group.getContacts();
+      if (contactsInAGroup.contains(contact)) {
+        isHave = true;
+      } else {
+        isHave = false;
+      }
+    }
+    System.out.println(isHave);
+    return isHave;
   }
 
-  public boolean isAnyContactInAGroup(ContactData contact) {
-    try {
-      ContactsInGroup dbContactsInGroupBefore = app.db().contactsInGroup(contact.getGroups().iterator().next().getGrid());
-      return true;
-    } catch (NoSuchElementException e) {
-      return false;
-    }
+  public void chooseAllGroup() {
+    new Select(driver.findElement(By.name("group"))).selectByVisibleText("[all]");
   }
 }
 

@@ -8,10 +8,7 @@ import ru.mytest.addressbook.model.Contacts;
 import ru.mytest.addressbook.model.GroupData;
 import ru.mytest.addressbook.model.Groups;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-public class ContactToGroupAdditionTests extends TestBase {
+public class ContactFromGroupDeletionTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
@@ -19,23 +16,20 @@ public class ContactToGroupAdditionTests extends TestBase {
   }
 
   @Test
-  public void testContactToGroupAddition() throws Exception {
+  public void testContactFromGroupDeletion() throws Exception {
     app.goTo().homePage();
     app.contact().chooseAllGroup();
-    ContactData addedContact = app.db().contacts().iterator().next();
-    System.out.println("1. " + addedContact.getGroups());
+    ContactData deletedContact = app.db().contacts().iterator().next();
     GroupData chosenGroup = app.db().groups().iterator().next();
-    System.out.println("2. " + chosenGroup);
+    System.out.println("1. " + chosenGroup);
     Contacts contactsInAGroupAfter = null;
     Contacts contactsInAGroupBefore = null;
-//    if (!app.contact().isContactInAGroup(addedContact.inGroup(chosenGroup))) {
-    if (!app.contact().isContactInAGroup(addedContact, chosenGroup)) {
+    if (!app.contact().isContactInAGroup(deletedContact, chosenGroup)) {
       try {
         contactsInAGroupBefore = chosenGroup.getContacts();
       } catch (NoSuchElementException e) {
       }
-      app.contact().addToGroup(addedContact.inGroup(chosenGroup));
-      System.out.println("5. " + addedContact.getGroups());
+      app.contact().addToGroup(deletedContact.inGroup(chosenGroup));
       contactsInAGroupAfter = chosenGroup.getContacts();
     }
     //assertThat(contactsInAGroupAfter, equalTo(contactsInAGroupBefore.withAdded(addedContact)));

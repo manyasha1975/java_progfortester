@@ -48,24 +48,6 @@ public class DbHelper {
     return new Contacts(result);
   }
 
-  public ContactsInGroup contactsInGroup(int id) {
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
-    List<ContactInGroupData> result = session.createQuery( "from ContactInGroupData where group_id = " + id).list();
-    session.getTransaction().commit();
-    session.close();
-    return new ContactsInGroup(result);
-  }
-
-  public ContactsInGroup anyContactsInAnyGroup() {
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
-    List<ContactInGroupData> result = session.createQuery( "from ContactInGroupData").list();
-    session.getTransaction().commit();
-    session.close();
-    return new ContactsInGroup(result);
-  }
-
   public ContactData selectContactById(Integer id) {
     Session session = sessionFactory.openSession();
     session.beginTransaction();

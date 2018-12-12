@@ -36,7 +36,7 @@ public class GroupData {
     @Type(type = "text") //convert type of data to text
     private String grfooter;
 
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER) //LAZY is a min info from db, EAGER is max info from db
     private Set<ContactData> contacts = new HashSet<ContactData>();
 
     public int getGrid() {
