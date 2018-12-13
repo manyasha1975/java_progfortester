@@ -227,11 +227,14 @@ public class ContactHelper extends HelperBase {
     driver.findElement(By.cssSelector("a[href='./?group=" + contact.getGroups().iterator().next().getGrid() + "']")).click();
   }
 
+  public void deleteFromGroup(ContactData contact, GroupData group) {
+    chooseGroupByName(group);
+    selectContactById(contact.getId());
+    driver.findElement(By.name("remove")).click();
+  }
+
   public boolean isContactInAGroup(ContactData contact, GroupData group) {
     boolean isHave = true;
-    System.out.println("3. " + contact.getGroups());
-    System.out.println("4. " + group.getContacts());
-    //GroupData chosenGroup = contact.getGroups().iterator().next();
     try {
       Contacts contactsInAGroup = group.getContacts();
     } catch (NoSuchElementException e) {
@@ -252,5 +255,10 @@ public class ContactHelper extends HelperBase {
   public void chooseAllGroup() {
     new Select(driver.findElement(By.name("group"))).selectByVisibleText("[all]");
   }
+
+  public void chooseGroupByName(GroupData group) {
+    new Select(driver.findElement(By.name("group"))).selectByVisibleText(group.getGrname());
+  }
+
 }
 

@@ -23,21 +23,13 @@ public class ContactToGroupAdditionTests extends TestBase {
     app.goTo().homePage();
     app.contact().chooseAllGroup();
     ContactData addedContact = app.db().contacts().iterator().next();
-    System.out.println("1. " + addedContact.getGroups());
     GroupData chosenGroup = app.db().groups().iterator().next();
-    System.out.println("2. " + chosenGroup);
-    Contacts contactsInAGroupAfter = null;
-    Contacts contactsInAGroupBefore = null;
-//    if (!app.contact().isContactInAGroup(addedContact.inGroup(chosenGroup))) {
+    Groups groupsOfContactBefore = addedContact.getGroups();
     if (!app.contact().isContactInAGroup(addedContact, chosenGroup)) {
-      try {
-        contactsInAGroupBefore = chosenGroup.getContacts();
-      } catch (NoSuchElementException e) {
-      }
       app.contact().addToGroup(addedContact.inGroup(chosenGroup));
-      System.out.println("5. " + addedContact.getGroups());
-      contactsInAGroupAfter = chosenGroup.getContacts();
     }
-    //assertThat(contactsInAGroupAfter, equalTo(contactsInAGroupBefore.withAdded(addedContact)));
+    System.out.println(chosenGroup);
+    Groups groupsOfContactAfter = addedContact.getGroups();
+    assertThat(groupsOfContactAfter, equalTo(groupsOfContactBefore.withAdded(chosenGroup)));
   }
 }
