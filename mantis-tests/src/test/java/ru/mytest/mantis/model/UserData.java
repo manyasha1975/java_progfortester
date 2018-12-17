@@ -16,7 +16,6 @@ public class UserData {
     private String userName;
 
     @Column (name = "email")
-    @Type(type = "text")
     private String userEmail;
 
     public int getId() {

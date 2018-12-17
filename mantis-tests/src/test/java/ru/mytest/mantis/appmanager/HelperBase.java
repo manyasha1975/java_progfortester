@@ -1,8 +1,11 @@
 package ru.mytest.mantis.appmanager;
 
 import org.openqa.selenium.*;
+import ru.lanwen.verbalregex.VerbalExpression;
+import ru.mytest.mantis.model.MailMessage;
 
 import java.io.File;
+import java.util.List;
 
 public class HelperBase {
 
