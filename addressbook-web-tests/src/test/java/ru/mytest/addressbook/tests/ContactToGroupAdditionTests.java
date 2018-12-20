@@ -22,14 +22,20 @@ public class ContactToGroupAdditionTests extends TestBase {
   public void testContactToGroupAddition() throws Exception {
     app.goTo().homePage();
     app.contact().chooseAllGroup();
-    ContactData addedContact = app.db().contacts().iterator().next();
+    ContactData addedContact = app.contact().findContactWithoutGroup();
+    //GroupData chosenGroup = app.db().groups().findGroupForContact(addedContact);
     GroupData chosenGroup = app.db().groups().iterator().next();
     Groups groupsOfContactBefore = addedContact.getGroups();
+    System.out.println("1. " + chosenGroup);
     if (!app.contact().isContactInAGroup(addedContact, chosenGroup)) {
       app.contact().addToGroup(addedContact.inGroup(chosenGroup));
     }
     System.out.println(chosenGroup);
-    Groups groupsOfContactAfter = addedContact.getGroups();
+    Contacts refreshContacts = app.db().contacts();
+    Groups groupsOfContactAfter = refreshContacts.iterator().next()
+            .withId(addedContact.getId()).getGroups();
+    System.out.println("2. " + groupsOfContactBefore.withAdded(chosenGroup));
+    System.out.println("3. " + groupsOfContactAfter);
     assertThat(groupsOfContactAfter, equalTo(groupsOfContactBefore.withAdded(chosenGroup)));
   }
 }

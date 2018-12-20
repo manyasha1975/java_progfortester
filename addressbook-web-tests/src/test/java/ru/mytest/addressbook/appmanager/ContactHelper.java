@@ -234,19 +234,16 @@ public class ContactHelper extends HelperBase {
   }
 
   public boolean isContactInAGroup(ContactData contact, GroupData group) {
-    boolean isHave = true;
-    try {
-      Contacts contactsInAGroup = group.getContacts();
-    } catch (NoSuchElementException e) {
-      isHave = false;
-    }
-    if (isHave) {
+    boolean isHave;
+    if (group.getContacts().size() > 0) {
       Contacts contactsInAGroup = group.getContacts();
       if (contactsInAGroup.contains(contact)) {
         isHave = true;
       } else {
         isHave = false;
       }
+    } else {
+      isHave = false;
     }
     System.out.println(isHave);
     return isHave;
@@ -260,5 +257,26 @@ public class ContactHelper extends HelperBase {
     new Select(driver.findElement(By.name("group"))).selectByVisibleText(group.getGrname());
   }
 
+  public ContactData findContactWithoutGroup() {
+    Contacts contacts = app.db().contacts();
+    Contacts contactsWithoutGroup = new Contacts();
+    for (ContactData contact: contacts) {
+      if (contact.getGroups().size() < app.db().groups().size()) {
+        contactsWithoutGroup.add(new ContactData().withId(contact.getId())
+                .withFirstName(contact.getFirstName()).withLastName(contact.getLastName())
+                .withNickName(contact.getNickName()).withTitle(contact.getTitle())
+                .withCompany(contact.getCompany()).withAddress(contact.getAddress())
+                .withEmail(contact.getEmail()).withEmail2(contact.getEmail2())
+                .withEmail3(contact.getEmail3()).withHomePhone(contact.getHomePhone())
+                .withMobilePhone(contact.getMobilePhone()).withWorkPhone(contact.getWorkPhone()));
+      }
+    }
+    if (contactsWithoutGroup.size() == 0) {
+      app.group().create(new GroupData().withName("Group3").withHeader("Group_new").withFooter("Group_new1"));
+      return contacts.iterator().next();
+    } else {
+      return contactsWithoutGroup.iterator().next();
+    }
+  }
 }
 

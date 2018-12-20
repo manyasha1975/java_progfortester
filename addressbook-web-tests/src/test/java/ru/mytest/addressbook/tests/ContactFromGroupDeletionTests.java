@@ -30,7 +30,9 @@ public class ContactFromGroupDeletionTests extends TestBase {
     if (app.contact().isContactInAGroup(deletedContact, chosenGroup)) {
       app.contact().deleteFromGroup(deletedContact, chosenGroup);
     }
-    Groups groupsOfContactAfter = deletedContact.getGroups();
+    Contacts refreshContacts = app.db().contacts();
+    Groups groupsOfContactAfter = refreshContacts.iterator().next()
+            .withId(deletedContact.getId()).getGroups();
     System.out.println("2. " + groupsOfContactBefore.without(chosenGroup));
     System.out.println("3. " + groupsOfContactAfter);
     assertThat(groupsOfContactAfter, equalTo(groupsOfContactBefore.without(chosenGroup)));
