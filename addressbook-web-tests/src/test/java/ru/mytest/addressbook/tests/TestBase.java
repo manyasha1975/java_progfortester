@@ -1,5 +1,6 @@
 package ru.mytest.addressbook.tests;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,8 @@ public class TestBase {
   @BeforeSuite(alwaysRun = true)
   public void setUp() throws Exception {
     app.init();
+    Alert alert = app.driver.switchTo().alert();
+    alert.accept();
   }
 
   @AfterSuite(alwaysRun = true)
