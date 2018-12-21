@@ -16,25 +16,29 @@ public class ContactFromGroupDeletionTests extends TestBase {
   @BeforeMethod
   public void ensurePreconditions() {
     app.contact().ensurePreconditions();
+    app.group().ensurePreconditions();
   }
 
   @Test
   public void testContactFromGroupDeletion() throws Exception {
     app.goTo().homePage();
     app.contact().chooseAllGroup();
-    ContactData deletedContact = app.db().contacts().iterator().next();
-    GroupData chosenGroup = app.db().groups().iterator().next();
+    ContactData deletedContact = app.contact().findContactWithGroup();
+    System.out.println("1. " + deletedContact);
+    Contacts contacts = app.db().contacts();
+    Groups groupsOfContactBefore = contacts.iterator().next()
+            .withId(deletedContact.getId()).getGroups();
+    System.out.println("2. " + groupsOfContactBefore);
+    GroupData chosenGroup = contacts.iterator().next()
+            .withId(deletedContact.getId()).getGroups().iterator().next();
+    System.out.println("3. " + chosenGroup);
     app.contact().chooseGroupByName(chosenGroup);
-    System.out.println("1. " + chosenGroup);
-    Groups groupsOfContactBefore = deletedContact.getGroups();
-    if (app.contact().isContactInAGroup(deletedContact, chosenGroup)) {
-      app.contact().deleteFromGroup(deletedContact, chosenGroup);
-    }
+    app.contact().deleteFromGroup(deletedContact, chosenGroup);
     Contacts refreshContacts = app.db().contacts();
     Groups groupsOfContactAfter = refreshContacts.iterator().next()
             .withId(deletedContact.getId()).getGroups();
-    System.out.println("2. " + groupsOfContactBefore.without(chosenGroup));
-    System.out.println("3. " + groupsOfContactAfter);
+    System.out.println("4. " + groupsOfContactBefore.without(chosenGroup));
+    System.out.println("5. " + groupsOfContactAfter);
     assertThat(groupsOfContactAfter, equalTo(groupsOfContactBefore.without(chosenGroup)));
   }
 }

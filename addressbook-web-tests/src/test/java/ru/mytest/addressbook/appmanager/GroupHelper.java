@@ -2,6 +2,8 @@ package ru.mytest.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import ru.mytest.addressbook.model.ContactData;
+import ru.mytest.addressbook.model.Contacts;
 import ru.mytest.addressbook.model.GroupData;
 import ru.mytest.addressbook.model.Groups;
 
@@ -24,9 +26,11 @@ public class GroupHelper extends HelperBase {
   }
 
   public void ensurePreconditions() {
-    app.goTo().groupPage();
+    long now = System.currentTimeMillis();
     if (app.db().groups().size() == 0) {
-      app.group().create(new GroupData().withName("Group3").withHeader("Group_new").withFooter("Group_new1"));
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName(String.format("Group_%s", now)).withHeader("Group_new").withFooter("Group_new1"));
+      app.goTo().homePage();
     }
   }
 
@@ -101,5 +105,7 @@ public class GroupHelper extends HelperBase {
     }
     return new Groups(groupCache);
   }
+
+
 
 }

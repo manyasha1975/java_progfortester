@@ -39,4 +39,16 @@ public class Groups extends ForwardingSet<GroupData> {
     return groups;
   }
 
+  public GroupData findGroupForContact(ContactData contact, Groups groups) {
+    Groups groupsWithoutCurrentContact = new Groups();
+    for (GroupData group: groups) {
+      if (!group.getContacts().contains(contact)) {
+        groupsWithoutCurrentContact.add(new GroupData().withId(group.getGrid())
+                .withName(group.getGrname()).withHeader(group.getGrheader())
+                .withFooter(group.getGrfooter()));
+      }
+    }
+    return groupsWithoutCurrentContact.iterator().next();
+  }
+
 }

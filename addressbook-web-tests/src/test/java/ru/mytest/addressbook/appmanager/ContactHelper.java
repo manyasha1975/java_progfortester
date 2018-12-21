@@ -220,11 +220,11 @@ public class ContactHelper extends HelperBase {
     return new Contacts(mergeDbContacts);
   }
 
-  public void addToGroup(ContactData contact) {
+  public void addToGroup(ContactData contact, GroupData group) {
     selectContactById(contact.getId());
-    new Select(driver.findElement(By.name("to_group"))).selectByVisibleText(contact.getGroups().iterator().next().getGrname());
+    new Select(driver.findElement(By.name("to_group"))).selectByVisibleText(group.getGrname());
     click(By.xpath("//input[@value='Add to']"));
-    driver.findElement(By.cssSelector("a[href='./?group=" + contact.getGroups().iterator().next().getGrid() + "']")).click();
+    driver.findElement(By.cssSelector("a[href='./?group=" + group.getGrid() + "']")).click();
   }
 
   public void deleteFromGroup(ContactData contact, GroupData group) {
@@ -237,6 +237,8 @@ public class ContactHelper extends HelperBase {
     boolean isHave;
     if (group.getContacts().size() > 0) {
       Contacts contactsInAGroup = group.getContacts();
+      System.out.println(group.getContacts());
+      System.out.println(contactsInAGroup.contains(contact));
       if (contactsInAGroup.contains(contact)) {
         isHave = true;
       } else {
@@ -272,10 +274,36 @@ public class ContactHelper extends HelperBase {
       }
     }
     if (contactsWithoutGroup.size() == 0) {
-      app.group().create(new GroupData().withName("Group3").withHeader("Group_new").withFooter("Group_new1"));
+      long now = System.currentTimeMillis();
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName(String.format("Group_%s", now)).withHeader("Group_new").withFooter("Group_new1"));
+      app.goTo().homePage();
       return contacts.iterator().next();
     } else {
       return contactsWithoutGroup.iterator().next();
+    }
+  }
+
+  public ContactData findContactWithGroup() {
+    Contacts contacts = app.db().contacts();
+    Contacts contactsWithGroup = new Contacts();
+    for (ContactData contact: contacts) {
+      if (contact.getGroups().size() > 0) {
+        contactsWithGroup.add(new ContactData().withId(contact.getId())
+                .withFirstName(contact.getFirstName()).withLastName(contact.getLastName())
+                .withNickName(contact.getNickName()).withTitle(contact.getTitle())
+                .withCompany(contact.getCompany()).withAddress(contact.getAddress())
+                .withEmail(contact.getEmail()).withEmail2(contact.getEmail2())
+                .withEmail3(contact.getEmail3()).withHomePhone(contact.getHomePhone())
+                .withMobilePhone(contact.getMobilePhone()).withWorkPhone(contact.getWorkPhone()));
+      }
+    }
+    if (contactsWithGroup.size() == 0) {
+      ContactData contact = app.db().contacts().iterator().next();
+      addToGroup(contact, app.db().groups().iterator().next());
+      return contact;
+    } else {
+      return contactsWithGroup.iterator().next();
     }
   }
 }

@@ -16,6 +16,7 @@ public class ContactToGroupAdditionTests extends TestBase {
   @BeforeMethod
   public void ensurePreconditions() {
     app.contact().ensurePreconditions();
+    app.group().ensurePreconditions();
   }
 
   @Test
@@ -23,19 +24,21 @@ public class ContactToGroupAdditionTests extends TestBase {
     app.goTo().homePage();
     app.contact().chooseAllGroup();
     ContactData addedContact = app.contact().findContactWithoutGroup();
-    //GroupData chosenGroup = app.db().groups().findGroupForContact(addedContact);
-    GroupData chosenGroup = app.db().groups().iterator().next();
-    Groups groupsOfContactBefore = addedContact.getGroups();
-    System.out.println("1. " + chosenGroup);
-    if (!app.contact().isContactInAGroup(addedContact, chosenGroup)) {
-      app.contact().addToGroup(addedContact.inGroup(chosenGroup));
-    }
+    System.out.println("1. " + addedContact);
+    Groups groups = app.db().groups();
+    Contacts contacts = app.db().contacts();
+    Groups groupsOfContactBefore = contacts.iterator().next()
+            .withId(addedContact.getId()).getGroups();
+    System.out.println("2. " + groupsOfContactBefore);
+    GroupData chosenGroup = app.db().groups().findGroupForContact(addedContact, groups);
+    System.out.println("3. " + chosenGroup);
+    app.contact().addToGroup(addedContact, chosenGroup);
     System.out.println(chosenGroup);
     Contacts refreshContacts = app.db().contacts();
     Groups groupsOfContactAfter = refreshContacts.iterator().next()
             .withId(addedContact.getId()).getGroups();
-    System.out.println("2. " + groupsOfContactBefore.withAdded(chosenGroup));
-    System.out.println("3. " + groupsOfContactAfter);
+    System.out.println("4. " + groupsOfContactBefore.withAdded(chosenGroup));
+    System.out.println("5. " + groupsOfContactAfter);
     assertThat(groupsOfContactAfter, equalTo(groupsOfContactBefore.withAdded(chosenGroup)));
   }
 }
