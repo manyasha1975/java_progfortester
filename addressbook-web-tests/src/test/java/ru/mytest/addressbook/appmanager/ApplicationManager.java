@@ -63,6 +63,8 @@ public class ApplicationManager {
     }
     baseUrl = "https://www.katalon.com/";
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    Alert alertOK = driver.switchTo().alert();
+    alertOK.accept();
     driver.get(properties.getProperty("web.baseUrl"));
     groupHelper = new GroupHelper(this);
     navigationHelper = new NavigationHelper(this);
