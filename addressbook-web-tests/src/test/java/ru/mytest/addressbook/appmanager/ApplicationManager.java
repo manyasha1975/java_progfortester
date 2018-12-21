@@ -1,6 +1,7 @@
 package ru.mytest.addressbook.appmanager;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,7 +16,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.fail;
@@ -38,11 +41,25 @@ public class ApplicationManager {
     properties = new Properties();
   }
 
-  public void init() throws IOException {
+  public void init() throws IOException, InterruptedException {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-    Alert alert = driver.switchTo().alert();
-    alert.accept();
+
+    Set<String> windowId = driver.getWindowHandles();    // get  window id of current window
+    Iterator<String> iterator = windowId.iterator();
+
+    String mainWinID = iterator.next();
+    String  newAdwinID = iterator.next();
+
+    driver.switchTo().window(newAdwinID);
+    System.out.println(driver.getTitle());
+    Thread.sleep(3000);
+    driver.close();
+
+    driver.switchTo().window(mainWinID);
+    System.out.println(driver.getTitle());
+    Thread.sleep(2000);
+
     dbHelper = new DbHelper();
 
     if ("".equals(properties.getProperty("selenium.server"))) { //for remote start of browser on selenium server, stand-alone
