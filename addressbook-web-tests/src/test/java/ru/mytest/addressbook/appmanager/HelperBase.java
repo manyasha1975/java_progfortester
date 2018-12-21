@@ -2,6 +2,7 @@ package ru.mytest.addressbook.appmanager;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
 
@@ -34,7 +35,10 @@ public class HelperBase {
   }
 
   protected void click(By locator) {
-    driver.findElement(locator).click();
+    //driver.findElement(locator).click();
+    WebElement element = driver.findElement(locator);
+    Actions actions = new Actions(driver);
+    actions.moveToElement(element).click().perform();
   }
 
   protected void submit(By locator) {
