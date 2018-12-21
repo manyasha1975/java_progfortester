@@ -17,6 +17,8 @@ public class ContactDeletionTests extends TestBase {
 
   @Test
   public void testContactDeletion() throws Exception {
+    app.goTo().homePage();
+    app.contact().chooseAllGroup();
     Contacts before = app.db().contacts();
     ContactData deletedContact = before.iterator().next(); //contact is chosen by random method
     app.contact().delete(deletedContact);

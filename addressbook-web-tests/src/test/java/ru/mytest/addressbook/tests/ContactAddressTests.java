@@ -16,6 +16,8 @@ public class ContactAddressTests extends TestBase {
 
   @Test
   public void testContactAddresses() {
+    app.goTo().homePage();
+    app.contact().chooseAllGroup();
     ContactData contact = app.contact().all().iterator().next(); //contact is chosen by random method
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 

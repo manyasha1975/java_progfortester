@@ -91,6 +91,7 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreation(ContactData contact) throws Exception {
     File photo = new File("src/test/resources/Avatar1.png");
     app.goTo().homePage();
+    app.contact().chooseAllGroup();
     Contacts before = app.db().contacts();
     app.contact().create(contact.inGroup(app.db().groups().iterator().next()).withPhoto(photo), true);
     assertThat(app.contact().count(), equalTo(before.size() + 1));

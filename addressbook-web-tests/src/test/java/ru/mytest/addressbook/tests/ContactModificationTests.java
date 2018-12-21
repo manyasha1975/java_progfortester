@@ -19,6 +19,8 @@ public class ContactModificationTests extends TestBase {
 
   @Test
   public void testContactModification() {
+    app.goTo().homePage();
+    app.contact().chooseAllGroup();
     File photo = new File("src/test/resources/Avatar2.png");
     Contacts before = app.db().contacts();
     ContactData modifiedContact = before.iterator().next(); //contact is chosen by random method
