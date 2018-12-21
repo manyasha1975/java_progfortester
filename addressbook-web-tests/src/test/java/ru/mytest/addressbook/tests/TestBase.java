@@ -32,7 +32,7 @@ public class TestBase {
   public void setUp() throws Exception {
     app.init();
     Alert alert = app.driver.switchTo().alert();
-    alert.accept();
+    alert.dismiss();
   }
 
   @AfterSuite(alwaysRun = true)
