@@ -1,5 +1,6 @@
 package ru.mytest.addressbook.appmanager;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -40,7 +41,8 @@ public class ApplicationManager {
   public void init() throws IOException {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-
+    Alert alert = driver.switchTo().alert();
+    alert.accept();
     dbHelper = new DbHelper();
 
     if ("".equals(properties.getProperty("selenium.server"))) { //for remote start of browser on selenium server, stand-alone

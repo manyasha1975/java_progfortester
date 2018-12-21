@@ -1,6 +1,5 @@
 package ru.mytest.addressbook.tests;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +8,6 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.mytest.addressbook.appmanager.ApplicationManager;
-import ru.mytest.addressbook.model.ContactData;
 import ru.mytest.addressbook.model.Contacts;
 import ru.mytest.addressbook.model.GroupData;
 import ru.mytest.addressbook.model.Groups;
@@ -31,8 +29,6 @@ public class TestBase {
   @BeforeSuite(alwaysRun = true)
   public void setUp() throws Exception {
     app.init();
-    Alert alert = app.driver.switchTo().alert();
-    alert.dismiss();
   }
 
   @AfterSuite(alwaysRun = true)
