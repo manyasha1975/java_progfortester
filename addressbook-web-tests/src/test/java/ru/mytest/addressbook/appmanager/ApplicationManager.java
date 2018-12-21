@@ -45,21 +45,6 @@ public class ApplicationManager {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
-    Set<String> windowId = driver.getWindowHandles();    // get  window id of current window
-    Iterator<String> iterator = windowId.iterator();
-
-    String mainWinID = iterator.next();
-    String  newAdwinID = iterator.next();
-
-    driver.switchTo().window(newAdwinID);
-    System.out.println(driver.getTitle());
-    Thread.sleep(3000);
-    driver.close();
-
-    driver.switchTo().window(mainWinID);
-    System.out.println(driver.getTitle());
-    Thread.sleep(2000);
-
     dbHelper = new DbHelper();
 
     if ("".equals(properties.getProperty("selenium.server"))) { //for remote start of browser on selenium server, stand-alone

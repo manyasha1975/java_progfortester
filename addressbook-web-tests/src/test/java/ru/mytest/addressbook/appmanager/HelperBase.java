@@ -35,10 +35,10 @@ public class HelperBase {
   }
 
   protected void click(By locator) {
-    //driver.findElement(locator).click();
-    WebElement element = driver.findElement(locator);
-    Actions actions = new Actions(driver);
-    actions.moveToElement(element).click().perform();
+    driver.findElement(locator).click();
+    //WebElement element = driver.findElement(locator);
+    //Actions actions = new Actions(driver);
+    //actions.moveToElement(element).click().perform();
   }
 
   protected void submit(By locator) {
